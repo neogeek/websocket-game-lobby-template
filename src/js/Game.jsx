@@ -11,45 +11,11 @@ const Game = () => {
 
     const [shouldShowDebug, setShouldShowDebug] = useState(false);
 
-    const [gameCode, setGameCode] = useState('');
-    const [playerName, setPlayerName] = useState('');
-
-    useEffect(() => {
-        setGameCode(data?.game?.gameCode || '');
-    }, [data]);
+    const isInLobby = !data?.turn;
 
     return (
         <>
-            {/*<div>Connection: {connected ? 'online' : 'offline'}</div>*/}
-            {/*<div>*/}
-            {/*    <Button primary label="Create Game" onClick={() => send('create')}/>*/}
-            {/*</div>*/}
-            {/*<div>*/}
-            {/*    <input*/}
-            {/*        type="text"*/}
-            {/*        name="playerName"*/}
-            {/*        value={playerName}*/}
-            {/*        onChange={e => setPlayerName(e.target.value)}*/}
-            {/*    />*/}
-            {/*</div>*/}
-            {/*<div>*/}
-            {/*    <input*/}
-            {/*        type="text"*/}
-            {/*        name="gameId"*/}
-            {/*        value={gameCode}*/}
-            {/*        onChange={e => setGameCode(e.target.value)}*/}
-            {/*    />*/}
-            {/*    <button onClick={() => send('join', { gameCode, playerName })}>*/}
-            {/*        Join Game*/}
-            {/*    </button>*/}
-            {/*</div>*/}
-            {/*<div>*/}
-            {/*    <button onClick={() => send('start')}>Start Game</button>*/}
-            {/*</div>*/}
-            {/*<div>*/}
-            {/*    <button onClick={() => send('leave')}>Leave Game</button>*/}
-            {/*</div>*/}
-            <Lobby data={data} send={send} />
+            {isInLobby && <Lobby data={data} send={send} />}
             <CheckBox
                 checked={shouldShowDebug}
                 label="Show Debug State"

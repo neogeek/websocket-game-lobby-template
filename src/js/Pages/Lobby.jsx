@@ -42,6 +42,7 @@ const Lobby = ({ data, send }) => {
 
     const renderGameCreated = () => {
         const isAdmin = data?.player.isAdmin;
+        const enoughPlayers = data?.game?.players?.length >= 3;
 
         return (
             <>
@@ -56,17 +57,25 @@ const Lobby = ({ data, send }) => {
                         style={{ marginBottom: '24px' }}
                     />
                     {isAdmin ? (
-                        <Button
-                            primary
-                            label="Start Game"
-                            onClick={() => send('start')}
-                        />
+                        <>
+                            <Button
+                                primary
+                                label="Start Game"
+                                disabled={!enoughPlayers}
+                                onClick={() => send('start')}
+                            />
+                            {!enoughPlayers ? (
+                                <Paragraph size="xlarge">
+                                    Waiting for more players to join the game...
+                                </Paragraph>
+                            ) : null}
+                        </>
                     ) : (
                         <Paragraph size="xlarge">
                             Waiting for admin to start game...
                         </Paragraph>
                     )}
-                    <PlayerList players={data.game.players} />
+                    <PlayerList players={data?.game?.players} />
                 </Box>
             </>
         );
