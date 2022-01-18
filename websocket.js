@@ -55,16 +55,10 @@ const websocket = ({ port, server }) => {
     );
 
     gameLobby.addEventListener('setField', async (data, datastore) => {
-        const { gameId, playerId, datingProfileId, fieldName } = data;
+        const { gameId, datingProfileId, fieldName } = data;
         const value = data[fieldName];
 
         await datastore.editGame(gameId, async game => {
-            const thisPlayer = getPlayer(playerId, game);
-            thisPlayer.currentDatingProfileId = getNextId(
-                datingProfileId,
-                game
-            );
-
             const thisDatingProfile = getDatingProfile(datingProfileId, game);
             thisDatingProfile[fieldName] = value;
 
@@ -74,6 +68,16 @@ const websocket = ({ port, server }) => {
         const game = await datastore.findGame(gameId);
 
         if (everyDatingProfileHasField(fieldName, game)) {
+            await datastore.editGame(gameId, async game => {
+                game.players.forEach(player => {
+                    player.currentDatingProfileId = getNextId(
+                        player.currentDatingProfileId,
+                        game
+                    );
+                });
+                return game;
+            });
+
             await datastore.endCurrentTurn(gameId);
         }
     });
