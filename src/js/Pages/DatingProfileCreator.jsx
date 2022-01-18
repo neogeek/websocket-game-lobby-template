@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Box, Paragraph, TextInput, Button, Image } from 'grommet';
 import { Next } from 'grommet-icons';
+import lodash from 'lodash';
 
 const DatingProfileCreator = ({ data, send }) => {
     const currentDatingProfileId = data?.player?.currentDatingProfileId;
@@ -171,6 +172,110 @@ const DatingProfileCreator = ({ data, send }) => {
         );
     };
 
+    const [answers, setAnswers] = useState({});
+
+    const setQuestionAnswer = (questionIndex, answerIndex, answer) => {
+        const result = { ...answers };
+
+        if (result[questionIndex]) {
+            result[questionIndex][answerIndex] = [answer];
+        } else {
+            result[questionIndex] = {
+                [answerIndex]: [answer]
+            };
+        }
+
+        setAnswers(result);
+    };
+
+    const setAnswerSubmitted = (questionIndex, answerIndex) => {
+        const result = { ...answers };
+        const answer = result[questionIndex][answerIndex][0];
+        result[questionIndex][answerIndex] = [answer, true];
+        setAnswers(result);
+    };
+
+    const renderAnswerForm = (questionIndex, answerIndex, wordCount) => {
+        const currentValue = lodash.get(answers, [
+            questionIndex,
+            answerIndex,
+            0
+        ]);
+
+        const isAnswerSubmitted = lodash.get(answers, [
+            questionIndex,
+            answerIndex,
+            1
+        ]);
+
+        const handleClick = () => {
+            setAnswerSubmitted(questionIndex, answerIndex);
+        };
+
+        return (
+            <>
+                {!isAnswerSubmitted ? (
+                    <>
+                        {answerIndex === 0 ? (
+                            <>
+                                <Paragraph size="xxlarge">
+                                    Respond to the following prompt
+                                </Paragraph>
+                                <Paragraph size="xxlarge">
+                                    {
+                                        currentDatingProfile.questions[
+                                            questionIndex
+                                        ]
+                                    }
+                                </Paragraph>
+                            </>
+                        ) : (
+                            <>
+                                <Paragraph size="xxlarge">
+                                    Continue the following response
+                                </Paragraph>
+                                <Paragraph size="xxlarge">
+                                    {
+                                        currentDatingProfile.answers[
+                                            questionIndex
+                                        ][answerIndex - 1]
+                                    }
+                                </Paragraph>
+                            </>
+                        )}
+                        <TextInput
+                            value={currentValue}
+                            onChange={event =>
+                                setQuestionAnswer(
+                                    questionIndex,
+                                    answerIndex,
+                                    event.target.value
+                                )
+                            }
+                            placeholder="Response..."
+                        />
+                        <Button
+                            disabled={
+                                currentValue?.split(' ').length !== wordCount
+                            }
+                            size="xxlarge"
+                            primary
+                            reverse
+                            label="Continue"
+                            onClick={handleClick}
+                            icon={<Next />}
+                        />
+                    </>
+                ) : (
+                    <>
+                        <Paragraph size="xxlarge">You submitted:</Paragraph>
+                        <Paragraph size="xxlarge">{currentValue}</Paragraph>
+                    </>
+                )}
+            </>
+        );
+    };
+
     const renderFormStep = () => {
         const currentTurn = data?.turn?.index || 0;
         switch (currentTurn) {
@@ -182,6 +287,10 @@ const DatingProfileCreator = ({ data, send }) => {
                 return renderProfilePicSelector();
             case 3:
                 return renderAgeForm();
+            case 4:
+                return renderAnswerForm(0, 0, 1);
+            case 5:
+                return renderAnswerForm(0, 1, 3);
             default:
                 return <p>default</p>;
         }

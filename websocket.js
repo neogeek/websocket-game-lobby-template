@@ -36,7 +36,15 @@ const websocket = ({ port, server }) => {
         async ({ gameId, playerId, userName }, datastore) => {
             await datastore.editGame(gameId, async game => {
                 const thisPlayer = getPlayer(playerId, game);
-                thisPlayer.datingProfile = { userName };
+                thisPlayer.datingProfile = {
+                    userName,
+                    questions: [
+                        "I'm secretly good at...",
+                        'The best way to ask me out is to...',
+                        'You should leave a comment if...'
+                    ],
+                    answers: []
+                };
 
                 thisPlayer.currentDatingProfileId = getNextId(playerId, game);
 
