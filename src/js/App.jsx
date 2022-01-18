@@ -1,20 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { Grommet } from 'grommet';
+import { deepMerge } from 'grommet/utils';
 import Game from './Game';
 
-const theme = {
+export const theme = deepMerge(Grommet, {
     global: {
         font: {
             family: 'IBM Plex Sans',
             size: '32px',
             height: '32px'
-        },
-
-        button: {
-            fontSize: '32px'
         }
     }
-};
+});
 
 const App = () => {
     return (

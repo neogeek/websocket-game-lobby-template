@@ -22,16 +22,31 @@ const DatingProfileCreator = ({ data, send }) => {
 
         return !isUsernameFormSubmitted ? (
             <>
-                <Paragraph size="xxlarge">
-                    Let's start by choosing a username!
+                <Paragraph
+                    style={{
+                        fontSize: '68px',
+                        lineHeight: '68px',
+                        fontWeight: 'bold'
+                    }}
+                    size="xxlarge"
+                >
+                    Choose a username!
                 </Paragraph>
                 <TextInput
                     placeholder="username"
                     value={userName}
                     onChange={event => setUsername(event.target.value)}
-                    style={{ marginBottom: '24px' }}
+                    style={{
+                        marginBottom: '24px',
+                        fontSize: '48px',
+                        padding: '30px',
+                        borderRadius: '15px',
+                        border: 'none',
+                        backgroundColor: 'white'
+                    }}
                 />
                 <Button
+                    style={{ fontSize: '48px', padding: '30px' }}
                     size="xxlarge"
                     disabled={!userName}
                     primary
@@ -296,11 +311,7 @@ const DatingProfileCreator = ({ data, send }) => {
         }
     };
 
-    return (
-        <Box pad="medium" direction="column">
-            {renderFormStep()}
-        </Box>
-    );
+    return <Box pad="medium">{renderFormStep()}</Box>;
 };
 
 export default DatingProfileCreator;

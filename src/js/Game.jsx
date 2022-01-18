@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useWebSocketGameLobbyClient } from 'websocket-game-lobby-client-hooks';
+import { Box } from 'grommet';
 
 import Lobby from './Pages/Lobby';
 import AdminScreen from './Pages/AdminScreen';
@@ -30,7 +31,11 @@ const Game = () => {
     const isAdmin = data?.player?.isAdmin;
 
     return (
-        <>
+        <Box
+            width="100vw"
+            height="100vh"
+            background="linear-gradient(62deg, #8EC5FC 0%, #E0C3FC 100%)"
+        >
             {isInLobby && <Lobby data={data} send={send} />}
             {!isInLobby && isAdmin && <AdminScreen data={data} send={send} />}
             {!isInLobby && !isAdmin && (
@@ -39,7 +44,7 @@ const Game = () => {
             {shouldShowDebug ? (
                 <pre>{JSON.stringify(data, null, 2)}</pre>
             ) : null}
-        </>
+        </Box>
     );
 };
 

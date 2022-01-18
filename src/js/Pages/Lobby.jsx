@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Box, Main, Heading, Paragraph, TextInput, Button } from 'grommet';
+import { Box, Main, Heading, Paragraph } from 'grommet';
 
 import PlayerList from '../Components/PlayerList';
+import Button from '../Components/Button';
+import TextInput from '../Components/TextInput';
 
 const Lobby = ({ data, send }) => {
     const [gameCode, setGameCode] = useState('');
@@ -32,16 +34,21 @@ const Lobby = ({ data, send }) => {
                 </>
             ) : (
                 <Button
+                    style={{
+                        fontSize: '48px',
+                        padding: '30px',
+                        marginBottom: '24px'
+                    }}
                     size="xxlarge"
                     primary
                     label="Create New Game"
                     onClick={() => send('create')}
-                    style={{ marginBottom: '24px' }}
                 />
             )}
             {isOnJoinForm ? (
                 <>
                     <Button
+                        style={{ fontSize: '48px', padding: '30px' }}
                         size="xxlarge"
                         primary
                         label="Submit"
@@ -49,6 +56,7 @@ const Lobby = ({ data, send }) => {
                         onClick={() => send('join', { gameCode, playerName })}
                     />
                     <Button
+                        style={{ fontSize: '48px', padding: '30px' }}
                         size="xxlarge"
                         primary
                         label="Back"
@@ -57,6 +65,7 @@ const Lobby = ({ data, send }) => {
                 </>
             ) : (
                 <Button
+                    style={{ fontSize: '48px', padding: '30px' }}
                     size="xxlarge"
                     primary
                     label="Join Existing Game"
@@ -73,8 +82,17 @@ const Lobby = ({ data, send }) => {
         return (
             <>
                 <Box>
-                    <Paragraph size="xxlarge">
-                        Game Code: {data.game.gameCode}
+                    <Paragraph style={{ fontSize: '48px' }} size="xxlarge">
+                        Game Code:
+                    </Paragraph>
+                    <Paragraph
+                        style={{
+                            fontSize: '90px',
+                            fontWeight: 'bold',
+                            margin: '0 0 60px 0'
+                        }}
+                    >
+                        {data.game.gameCode}
                     </Paragraph>
                     <Button
                         size="xxlarge"
@@ -86,6 +104,7 @@ const Lobby = ({ data, send }) => {
                     {isAdmin ? (
                         <>
                             <Button
+                                style={{ fontSize: '48px', padding: '30px' }}
                                 size="xxlarge"
                                 primary
                                 label="Start Game"
@@ -93,13 +112,27 @@ const Lobby = ({ data, send }) => {
                                 onClick={() => send('start')}
                             />
                             {!enoughPlayers ? (
-                                <Paragraph size="xlarge">
+                                <Paragraph
+                                    size="xlarge"
+                                    style={{
+                                        fontSize: '48px',
+                                        lineHeight: '48px',
+                                        fontWeight: 'bold'
+                                    }}
+                                >
                                     Waiting for more players to join the game...
                                 </Paragraph>
                             ) : null}
                         </>
                     ) : (
-                        <Paragraph size="xlarge">
+                        <Paragraph
+                            size="xlarge"
+                            style={{
+                                fontSize: '48px',
+                                lineHeight: '48px',
+                                fontWeight: 'bold'
+                            }}
+                        >
                             Waiting for admin to start game...
                         </Paragraph>
                     )}
@@ -110,25 +143,22 @@ const Lobby = ({ data, send }) => {
     };
 
     return (
-        <Box
-            width="100vw"
-            height="100vh"
-            background="linear-gradient(62deg, #8EC5FC 0%, #E0C3FC 100%)"
-        >
-            <Box
-                direction="column"
-                border={{ color: 'brand', size: 'large' }}
-                pad="medium"
-                margin="medium"
-                // style={{ marginBottom: '120px' }}
-            >
-                <Main align="center" pad="small">
-                    <Heading size="medium">Magnetic Personality</Heading>
-                    <Paragraph size="large">
-                        The chaotic dating profile generator!
-                    </Paragraph>
-                </Main>
-            </Box>
+        <>
+            {!data?.game && (
+                <Box
+                    direction="column"
+                    border={{ color: 'brand', size: 'large' }}
+                    pad="medium"
+                    margin="medium"
+                >
+                    <Main align="center" pad="small">
+                        <Heading size="medium">Magnetic Personality</Heading>
+                        <Paragraph size="large">
+                            The chaotic dating profile generator!
+                        </Paragraph>
+                    </Main>
+                </Box>
+            )}
             <Box
                 direction="column"
                 justify="center"
@@ -137,7 +167,7 @@ const Lobby = ({ data, send }) => {
             >
                 {!data?.game ? renderCreateOrJoin() : renderGameCreated()}
             </Box>
-        </Box>
+        </>
     );
 };
 

@@ -1,6 +1,7 @@
 import React from 'react';
-import TalkingCharacter from '../Components/TalkingCharacter.jsx';
 import { Box } from 'grommet';
+import TalkingCharacter from '../Components/TalkingCharacter.jsx';
+import DatingProfilePreview from '../Components/DatingProfilePreview.jsx';
 
 const AdminScreen = ({ data, send }) => {
     const render = () => {
@@ -31,20 +32,28 @@ const AdminScreen = ({ data, send }) => {
                         ]}
                     />
                 );
+            case 4:
+                return (
+                    <>
+                        <TalkingCharacter dialogue={['poo poo!']} />
+                        <Box>
+                            {data.game.players
+                                .filter(player => !player.isAdmin)
+                                .map(player => player?.datingProfile)
+                                .map(datingProfile => (
+                                    <DatingProfilePreview
+                                        datingProfile={datingProfile}
+                                    />
+                                ))}
+                        </Box>
+                    </>
+                );
             default:
                 return <p>default</p>;
         }
     };
 
-    return (
-        <Box
-            width="100vw"
-            height="100vh"
-            background="linear-gradient(62deg, #8EC5FC 0%, #E0C3FC 100%)"
-        >
-            {render()}
-        </Box>
-    );
+    return render();
 };
 
 export default AdminScreen;
