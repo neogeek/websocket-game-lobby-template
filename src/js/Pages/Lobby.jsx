@@ -110,7 +110,11 @@ const Lobby = ({ data, send }) => {
     };
 
     return (
-        <>
+        <Box
+            width="100vw"
+            height="100vh"
+            background="linear-gradient(62deg, #8EC5FC 0%, #E0C3FC 100%)"
+        >
             <Box
                 direction="column"
                 border={{ color: 'brand', size: 'large' }}
@@ -133,7 +137,7 @@ const Lobby = ({ data, send }) => {
             >
                 {!data?.game ? renderCreateOrJoin() : renderGameCreated()}
             </Box>
-        </>
+        </Box>
     );
 };
 

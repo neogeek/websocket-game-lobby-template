@@ -297,8 +297,7 @@ const DatingProfileCreator = ({ data, send }) => {
     };
 
     return (
-        <Box direction="column">
-            <Paragraph size="xxlarge">Dating Profile Creator</Paragraph>
+        <Box pad="medium" direction="column">
             {renderFormStep()}
         </Box>
     );

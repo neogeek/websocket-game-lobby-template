@@ -40,7 +40,7 @@ const AdminScreen = ({ data, send }) => {
         <Box
             width="100vw"
             height="100vh"
-            background="linear-gradient(to right, #74ebd5, #acb6e5)"
+            background="linear-gradient(62deg, #8EC5FC 0%, #E0C3FC 100%)"
         >
             {render()}
         </Box>
