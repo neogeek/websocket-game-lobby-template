@@ -6,6 +6,10 @@ import { Next } from 'grommet-icons';
 const TalkingCharacter = ({ dialogue }) => {
     const [index, setIndex] = useState(0);
 
+    useEffect(() => {
+        setIndex(0);
+    }, [dialogue]);
+
     return (
         <Box
             width="100%"
