@@ -10,24 +10,29 @@ const AdminScreen = ({ data, send }) => {
                 return <p>error</p>;
             case 1:
                 return (
-                    <Box
-                        width="100vw"
-                        height="100vh"
-                        background="linear-gradient(to right, #74ebd5, #acb6e5)"
-                    >
-                        <TalkingCharacter
-                            dialogue={[
-                                'Welcome to Magnetic Personality - the game where you and your friends collaboratively create chaotic dating profiles!'
-                            ]}
-                        />
-                    </Box>
+                    <TalkingCharacter
+                        dialogue={[
+                            'Welcome to Magnetic Personality - the game where you and your friends collaboratively create chaotic fictional dating profiles!',
+                            'To start, everyone use your device to submit a username for a dating profile.',
+                            'Try creating an eye catching username like dom_top_daddy_69 or xoxoRAWR~dragon-Slayer!',
+                            'Now I will patiently wait for everyone to submit their username.'
+                        ]}
+                    />
                 );
             default:
                 return <p>default</p>;
         }
     };
 
-    return render();
+    return (
+        <Box
+            width="100vw"
+            height="100vh"
+            background="linear-gradient(to right, #74ebd5, #acb6e5)"
+        >
+            {render()}
+        </Box>
+    );
 };
 
 export default AdminScreen;
