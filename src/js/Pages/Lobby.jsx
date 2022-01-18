@@ -49,10 +49,11 @@ const Lobby = ({ data, send }) => {
         return (
             <>
                 <Box>
-                    <Paragraph size="large">
+                    <Paragraph size="xxlarge">
                         Game Code: {data.game.gameCode}
                     </Paragraph>
                     <Button
+                        size="xxlarge"
                         primary
                         label="Leave Game"
                         onClick={() => send('leave')}
@@ -61,6 +62,7 @@ const Lobby = ({ data, send }) => {
                     {isAdmin ? (
                         <>
                             <Button
+                                size="xxlarge"
                                 primary
                                 label="Start Game"
                                 disabled={!enoughPlayers}
