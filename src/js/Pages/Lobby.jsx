@@ -14,6 +14,7 @@ const Lobby = ({ data, send }) => {
     const renderCreateOrJoin = () => (
         <>
             <Button
+                size="large"
                 primary
                 label="Create New Game"
                 onClick={() => send('create')}
@@ -33,6 +34,7 @@ const Lobby = ({ data, send }) => {
                 onChange={e => setPlayerName(e.target.value)}
             />
             <Button
+                size="large"
                 primary
                 label="Join Existing Game"
                 onClick={() => send('join', { gameCode, playerName })}

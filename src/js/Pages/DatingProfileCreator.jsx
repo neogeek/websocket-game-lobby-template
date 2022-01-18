@@ -24,6 +24,7 @@ const DatingProfileCreator = ({ data, send }) => {
                     style={{ marginBottom: '24px' }}
                 />
                 <Button
+                    size="large"
                     disabled={!userName}
                     primary
                     reverse
@@ -72,6 +73,7 @@ const DatingProfileCreator = ({ data, send }) => {
                     ))}
                 </Box>
                 <Button
+                    size="large"
                     disabled={!selectedImageUrl}
                     primary
                     reverse
@@ -112,6 +114,7 @@ const DatingProfileCreator = ({ data, send }) => {
                 />
                 <Button
                     // disabled={!selectedImageUrl}
+                    size="large"
                     primary
                     reverse
                     label="Continue"
