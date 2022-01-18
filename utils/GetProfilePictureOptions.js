@@ -22,18 +22,19 @@ const queryTerms = [
     'fatherly man',
     'princess',
     'rich woman',
-    'crazy cat lady',
-    'horse man',
     'farmer',
     'woman doctor',
-    'ceo',
+    'woman ceo',
+    'woman lawyer',
     'stripper',
     'fire fighter',
     'gardner',
-    'coach',
+    'sports coach',
     'chef',
     'nerd',
-    'nerd woman'
+    'nerd woman',
+    'astronaut',
+    'janitor'
 ];
 
 const serverApi = createApi({
