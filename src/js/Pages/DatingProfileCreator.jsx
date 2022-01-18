@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Box, Paragraph, TextInput, Button, Image } from 'grommet';
 import { Next } from 'grommet-icons';
 import lodash from 'lodash';
+import DatingProfilePreview from '../Components/DatingProfilePreview.jsx';
 
 const DatingProfileCreator = ({ data, send }) => {
     const currentDatingProfileId = data?.player?.currentDatingProfileId;
@@ -57,7 +58,19 @@ const DatingProfileCreator = ({ data, send }) => {
                 />
             </>
         ) : (
-            <Paragraph size="xxlarge">Username: {userName}</Paragraph>
+            <>
+                <DatingProfilePreview datingProfile={{ userName }} />
+                <Paragraph
+                    style={{
+                        fontSize: '68px',
+                        lineHeight: '68px',
+                        fontWeight: 'bold'
+                    }}
+                    size="xxlarge"
+                >
+                    Waiting for other players...
+                </Paragraph>
+            </>
         );
     };
 
@@ -77,13 +90,9 @@ const DatingProfileCreator = ({ data, send }) => {
         return (
             <>
                 <Paragraph size="xxlarge">
-                    Now we've swapped and you have someone else's dating
-                    profile.
+                    Select a profile picture for this dating profile:
                 </Paragraph>
-                <Paragraph size="xxlarge">
-                    The username for this dating profile is{' '}
-                    {currentDatingProfile?.userName}
-                </Paragraph>
+                <DatingProfilePreview datingProfile={currentDatingProfile} />
                 {isProfilePicSubmitted ? (
                     <>
                         <Paragraph size="xxlarge">You selected:</Paragraph>
