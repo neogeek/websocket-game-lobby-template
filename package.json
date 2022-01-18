@@ -5,6 +5,7 @@
     "http-single-serve": "1.0.0",
     "lodash": "^4.17.21",
     "node-fetch": "^3.1.1",
+    "react-animation": "^1.2.2",
     "unsplash-js": "^7.0.15",
     "websocket-game-lobby": "4.0.0"
   },
