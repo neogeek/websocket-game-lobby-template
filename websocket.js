@@ -1,19 +1,15 @@
-const {
+import {
     WebSocketGameLobbyServer,
     EphemeralDataStore
-} = require('websocket-game-lobby');
+} from 'websocket-game-lobby';
 
-const getNextId = (currentId, players) => {
-    const currentIndex = players.findIndex(
-        player => player.playerId === currentId
-    );
-    let resultIndex = currentIndex + 1;
-
-    if (!players[resultIndex]) {
-        resultIndex = 1;
-    }
-    return players[resultIndex].playerId;
-};
+import { getProfilePictureOptions } from './utils/GetProfilePictureOptions.js';
+import {
+    getNextId,
+    getPlayer,
+    getDatingProfile,
+    everyDatingProfileHasField
+} from './utils/GameUtils.js';
 
 const websocket = ({ port, server }) => {
     const datastore = new EphemeralDataStore();
@@ -28,9 +24,7 @@ const websocket = ({ port, server }) => {
         'join',
         async ({ gameId, playerId, playerName }, datastore) => {
             await datastore.editGame(gameId, async game => {
-                const thisPlayer = game.players.find(
-                    player => player.playerId === playerId
-                );
+                const thisPlayer = getPlayer(playerId, game);
                 thisPlayer.name = playerName;
                 return game;
             });
@@ -41,28 +35,48 @@ const websocket = ({ port, server }) => {
         'setUsername',
         async ({ gameId, playerId, userName }, datastore) => {
             await datastore.editGame(gameId, async game => {
-                const thisPlayer = game.players.find(
-                    player => player.playerId === playerId
-                );
+                const thisPlayer = getPlayer(playerId, game);
                 thisPlayer.datingProfile = { userName };
-                thisPlayer.currentDatingProfileId = getNextId(
-                    playerId,
-                    game.players
-                );
+
+                thisPlayer.currentDatingProfileId = getNextId(playerId, game);
+
+                thisPlayer.profilePictureOptions =
+                    await getProfilePictureOptions();
+
                 return game;
             });
 
             const game = await datastore.findGame(gameId);
 
-            if (
-                game.players.every(
-                    player => player.isAdmin || player?.datingProfile?.userName
-                )
-            ) {
+            if (everyDatingProfileHasField('userName', game)) {
                 await datastore.endCurrentTurn(gameId);
             }
         }
     );
+
+    gameLobby.addEventListener('setField', async (data, datastore) => {
+        const { gameId, playerId, datingProfileId, fieldName } = data;
+        const value = data[fieldName];
+
+        await datastore.editGame(gameId, async game => {
+            const thisPlayer = getPlayer(playerId, game);
+            thisPlayer.currentDatingProfileId = getNextId(
+                datingProfileId,
+                game
+            );
+
+            const thisDatingProfile = getDatingProfile(datingProfileId, game);
+            thisDatingProfile[fieldName] = value;
+
+            return game;
+        });
+
+        const game = await datastore.findGame(gameId);
+
+        if (everyDatingProfileHasField(fieldName, game)) {
+            await datastore.endCurrentTurn(gameId);
+        }
+    });
 };
 
-module.exports = websocket;
+export default websocket;

@@ -1,6 +1,5 @@
-const http = require('http-single-serve');
-
-const websocket = require('./websocket');
+import http from 'http-single-serve';
+import websocket from './websocket.js';
 
 websocket({
     server: http({
