@@ -10,6 +10,7 @@ const DatingProfilePreview = ({ datingProfile }) => {
     return (
         <Box
             direction={isSmall ? 'column' : 'row'}
+            align={'center'}
             animation="slideUp"
             margin="medium"
             pad="medium"
@@ -22,14 +23,22 @@ const DatingProfilePreview = ({ datingProfile }) => {
         >
             <Box
                 margin="small"
-                height="300px"
-                width="300px"
-                style={{
-                    overflow: 'hidden',
-                    marginRight: '30px'
-                }}
+                height="280px"
+                width="280px"
+                style={
+                    isSmall
+                        ? {
+                              overflow: 'hidden',
+                              marginRight: '0'
+                          }
+                        : {
+                              overflow: 'hidden',
+                              marginRight: '30px'
+                          }
+                }
             >
                 <Image
+                    style={{ borderRadius: '15px' }}
                     fit="cover"
                     src={
                         datingProfile?.profilePic
@@ -43,40 +52,24 @@ const DatingProfilePreview = ({ datingProfile }) => {
                     style={
                         isSmall
                             ? {
-                                  fontSize: '32px',
-                                  lineHeight: '32px',
+                                  fontSize: '24px',
+                                  lineHeight: '24px',
+                                  fontWeight: '600',
                                   maxWidth: '100%',
-                                  overflowWrap: 'break-word'
+                                  overflowWrap: 'break-word',
+                                  marginTop: '0'
                               }
                             : {
                                   fontSize: '60px',
                                   lineHeight: '60px',
+                                  fontWeight: '700',
                                   maxWidth: '100%',
                                   overflowWrap: 'break-word'
                               }
                     }
                 >
                     {datingProfile?.userName}
-                    {datingProfile?.age ? `,${datingProfile?.age}` : null}
                 </Paragraph>
-                {/*<Paragraph*/}
-                {/*    style={*/}
-                {/*        isSmall*/}
-                {/*            ? {*/}
-                {/*                  fontSize: '18px',*/}
-                {/*                  lineHeight: '18px',*/}
-                {/*                  maxWidth: '100%'*/}
-                {/*              }*/}
-                {/*            : {*/}
-                {/*                  fontSize: '32px',*/}
-                {/*                  lineHeight: '32px',*/}
-                {/*                  maxWidth: '100%'*/}
-                {/*              }*/}
-                {/*    }*/}
-                {/*>*/}
-                {/*    This is a short introduction about me! Get to know me. Love*/}
-                {/*    me. Become me. I am the darkness and I am the night.*/}
-                {/*</Paragraph>*/}
             </Box>
         </Box>
     );

@@ -32,6 +32,15 @@ const AdminScreen = ({ data, send }) => {
                         ]}
                     />
                 );
+            case 3:
+                return (
+                    <TalkingCharacter
+                        dialogue={[
+                            'Okay, those profile pics are cute! Well... some of them are.',
+                            'Now guess how old everyone is based on their profile pic!'
+                        ]}
+                    />
+                );
             case 4:
                 return (
                     <>

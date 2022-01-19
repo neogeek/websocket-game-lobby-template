@@ -13,6 +13,24 @@ const DatingProfileCreator = ({ data, send }) => {
         player => player.playerId === currentDatingProfileId
     )?.datingProfile;
 
+    const renderWaitingForOtherPlayers = () => (
+        <Paragraph
+            style={{
+                fontSize: '68px',
+                lineHeight: '68px',
+                fontWeight: 'bold',
+                position: 'absolute',
+                left: '50%',
+                top: '50%',
+                transform: 'translate(-50%,-50%)',
+                margin: 0
+            }}
+            size="xxlarge"
+        >
+            Waiting for other players...
+        </Paragraph>
+    );
+
     const [userName, setUsername] = useState('');
     const [isUsernameFormSubmitted, setIsUsernameFormSubmitted] =
         useState(false);
@@ -54,25 +72,13 @@ const DatingProfileCreator = ({ data, send }) => {
                     disabled={!userName}
                     primary
                     reverse
-                    label="Continue"
+                    label="Submit"
                     onClick={handleClick}
                     icon={<Next />}
                 />
             </>
         ) : (
-            <>
-                <DatingProfilePreview datingProfile={{ userName }} />
-                <Paragraph
-                    style={{
-                        fontSize: '68px',
-                        lineHeight: '68px',
-                        fontWeight: 'bold'
-                    }}
-                    size="xxlarge"
-                >
-                    Waiting for other players...
-                </Paragraph>
-            </>
+            renderWaitingForOtherPlayers()
         );
     };
 
@@ -89,9 +95,15 @@ const DatingProfileCreator = ({ data, send }) => {
             setIsProfilePicSubmitted(true);
         };
 
-        return (
+        return isProfilePicSubmitted ? (
+            renderWaitingForOtherPlayers()
+        ) : (
             <>
-                <Paragraph size="xxlarge">
+                <Paragraph
+                    margin="medium"
+                    style={{ fontSize: '24px' }}
+                    size="xxlarge"
+                >
                     Select a profile picture for this dating profile:
                 </Paragraph>
                 <DatingProfilePreview
@@ -100,66 +112,49 @@ const DatingProfileCreator = ({ data, send }) => {
                         profilePic: selectedImageUrl
                     }}
                 />
-                {isProfilePicSubmitted ? (
-                    <>
-                        <Paragraph
-                            size="xxlarge"
-                            style={{
-                                fontSize: '68px',
-                                lineHeight: '68px',
-                                fontWeight: 'bold'
+                <Box direction="row" justify="center" wrap>
+                    {data?.player?.profilePictureOptions.map(imageUrl => (
+                        <Box
+                            margin="medium"
+                            animation="slideUp"
+                            height="small"
+                            width="small"
+                            border={
+                                imageUrl === selectedImageUrl && {
+                                    color: 'brand',
+                                    size: 'large'
+                                }
+                            }
+                            css={{
+                                cursor: 'pointer;',
+                                '&:hover': {
+                                    border: '5px solid #7D4CDB;'
+                                }
                             }}
+                            onClick={() => setSelectedImageUrl(imageUrl)}
                         >
-                            Waiting for other players...
-                        </Paragraph>
-                    </>
-                ) : (
-                    <>
-                        <Box direction="row" justify="center" wrap>
-                            {data?.player?.profilePictureOptions.map(
-                                imageUrl => (
-                                    <Box
-                                        margin="medium"
-                                        animation="slideUp"
-                                        height="small"
-                                        width="small"
-                                        border={
-                                            imageUrl === selectedImageUrl && {
-                                                color: 'brand',
-                                                size: 'large'
-                                            }
-                                        }
-                                        css={{
-                                            cursor: 'pointer;',
-                                            '&:hover': {
-                                                border: '5px solid #7D4CDB;'
-                                            }
-                                        }}
-                                        onClick={() =>
-                                            setSelectedImageUrl(imageUrl)
-                                        }
-                                    >
-                                        <Image fit="cover" src={imageUrl} />
-                                    </Box>
-                                )
-                            )}
+                            <Image
+                                style={{ borderRadius: '15px' }}
+                                fit="cover"
+                                src={imageUrl}
+                            />
                         </Box>
-                        <Button
-                            style={{
-                                position: 'fixed',
-                                width: '90%',
-                                bottom: '100px'
-                            }}
-                            size="xxlarge"
-                            disabled={!selectedImageUrl}
-                            primary
-                            reverse
-                            label="Submit"
-                            onClick={handleClick}
-                            icon={<Next />}
-                        />
-                    </>
-                )}
+                    ))}
+                </Box>
+                <Button
+                    style={{
+                        position: 'fixed',
+                        width: '90%',
+                        bottom: '60px'
+                    }}
+                    size="xxlarge"
+                    disabled={!selectedImageUrl}
+                    primary
+                    reverse
+                    label="Submit"
+                    onClick={handleClick}
+                    icon={<Next />}
+                />
             </>
         );
     };
@@ -178,14 +173,23 @@ const DatingProfileCreator = ({ data, send }) => {
 
         return !isAgeFormSubmitted ? (
             <Box direction="column" style={{ alignItems: 'center' }}>
-                <Paragraph size="xxlarge">How old is this person?</Paragraph>
+                <Paragraph
+                    style={{ fontSize: '24px', marginRight: 'auto' }}
+                    size="xxlarge"
+                >
+                    How old is this person?
+                </Paragraph>
                 <Box
                     margin="medium"
                     animation="slideUp"
-                    height="small"
-                    width="small"
+                    height="medium"
+                    width="medium"
                 >
-                    <Image fit="cover" src={currentDatingProfile?.profilePic} />
+                    <Image
+                        style={{ borderRadius: '15px' }}
+                        fit="cover"
+                        src={currentDatingProfile?.profilePic}
+                    />
                 </Box>
                 <TextInput
                     type="number"
@@ -205,16 +209,7 @@ const DatingProfileCreator = ({ data, send }) => {
                 />
             </Box>
         ) : (
-            <Paragraph
-                size="xxlarge"
-                style={{
-                    fontSize: '68px',
-                    lineHeight: '68px',
-                    fontWeight: 'bold'
-                }}
-            >
-                Waiting for other players...
-            </Paragraph>
+            renderWaitingForOtherPlayers()
         );
     };
 

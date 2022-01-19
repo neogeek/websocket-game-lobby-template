@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Box, Button, Paragraph } from 'grommet';
+import { Box, Paragraph } from 'grommet';
 import { animations, AnimateOnChange } from 'react-animation';
 import { Next } from 'grommet-icons';
+
+import Button from '../Components/Button.jsx';
 
 const TalkingCharacter = ({ dialogue }) => {
     const [index, setIndex] = useState(0);
@@ -17,6 +19,7 @@ const TalkingCharacter = ({ dialogue }) => {
             direction="column"
             align="center"
             justify="center"
+            style={{ marginTop: '100px' }}
         >
             <img
                 className="character"
@@ -28,7 +31,10 @@ const TalkingCharacter = ({ dialogue }) => {
                 }}
                 src="/magnet.png"
             />
-            <Paragraph size="xxlarge" style={{ marginBottom: '24px' }}>
+            <Paragraph
+                size="xxlarge"
+                style={{ marginBottom: '24px', minHeight: '80px' }}
+            >
                 <AnimateOnChange
                     animationIn="bounceIn"
                     animationOut="bounceOut"
