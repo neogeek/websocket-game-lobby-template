@@ -3,6 +3,8 @@ import {
     EphemeralDataStore
 } from 'websocket-game-lobby';
 
+import lodash from 'lodash';
+
 import { getProfilePictureOptions } from './utils/GetProfilePictureOptions.js';
 import {
     getNextId,
@@ -74,6 +76,54 @@ const websocket = ({ port, server }) => {
             await datastore.endCurrentTurn(gameId);
         }
     });
+
+    gameLobby.addEventListener(
+        'answerQuestion',
+        async (
+            {
+                gameId,
+                playerId,
+                datingProfileId,
+                questionIndex,
+                answerIndex,
+                answer
+            },
+            datastore
+        ) => {
+            await datastore.editGame(gameId, async game => {
+                const thisDatingProfile = getDatingProfile(
+                    datingProfileId,
+                    game
+                );
+                lodash.setWith(
+                    thisDatingProfile,
+                    ['answers', questionIndex, answerIndex],
+                    answer
+                );
+                return game;
+            });
+            const game = await datastore.findGame(gameId);
+
+            if (
+                everyDatingProfileHasFields(
+                    [['answers', questionIndex, answerIndex]],
+                    game
+                )
+            ) {
+                await datastore.editGame(gameId, async game => {
+                    game.players.forEach(player => {
+                        player.currentDatingProfileId = getNextId(
+                            player.currentDatingProfileId,
+                            game
+                        );
+                    });
+                    return game;
+                });
+
+                await datastore.endCurrentTurn(gameId);
+            }
+        }
+    );
 };
 
 export default websocket;

@@ -1,3 +1,5 @@
+import lodash from 'lodash';
+
 export const getNextId = (currentId, game) => {
     const currentIndex = game.players.findIndex(
         player => player.playerId === currentId
@@ -25,7 +27,8 @@ export const getDatingProfile = (datingProfileId, game) =>
 export const everyDatingProfileHasFields = (fieldNames, game) => {
     return fieldNames.every(fieldName =>
         game.players.every(
-            player => player.isAdmin || player?.datingProfile?.[fieldName]
+            player =>
+                player.isAdmin || lodash.get(player?.datingProfile, fieldName)
         )
     );
 };

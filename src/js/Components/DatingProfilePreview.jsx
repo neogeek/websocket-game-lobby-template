@@ -65,7 +65,9 @@ const DatingProfilePreview = ({ datingProfile }) => {
                                   lineHeight: '60px',
                                   fontWeight: '700',
                                   maxWidth: '100%',
-                                  overflowWrap: 'break-word'
+                                  overflowWrap: 'break-word',
+                                  marginTop: 0,
+                                  marginBottom: '30px'
                               }
                     }
                 >
@@ -101,7 +103,7 @@ const DatingProfilePreview = ({ datingProfile }) => {
                             style={{ margin: 0 }}
                             size={'16px'}
                         />
-                        <Box direction="column">
+                        <Box direction={isSmall ? 'column' : 'row'}>
                             <Paragraph
                                 color="secondaryText"
                                 style={{ margin: '2px 0 0 6px' }}

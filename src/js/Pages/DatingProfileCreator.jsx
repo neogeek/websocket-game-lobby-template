@@ -395,6 +395,25 @@ const DatingProfileCreator = ({ data, send }) => {
 
         const handleClick = () => {
             setAnswerSubmitted(questionIndex, answerIndex);
+
+            send('answerQuestion', {
+                datingProfileId: currentDatingProfileId,
+                questionIndex,
+                answerIndex,
+                answer: answers[questionIndex][answerIndex]
+            });
+        };
+
+        const getButtonLabel = () => {
+            const numberOfWords = (currentValue?.split(' ') || []).length;
+
+            if (!numberOfWords) {
+                return `${wordCount} words remaining`;
+            }
+            if (numberOfWords === wordCount) {
+                return 'Submit';
+            }
+            return `${wordCount - numberOfWords} words remaining`;
         };
 
         return (
@@ -443,22 +462,20 @@ const DatingProfileCreator = ({ data, send }) => {
                             placeholder="..."
                         />
                         <Button
+                            style={{ marginTop: '30px' }}
                             disabled={
                                 currentValue?.split(' ').length !== wordCount
                             }
                             size="xxlarge"
                             primary
                             reverse
-                            label="Submit"
+                            label={getButtonLabel()}
                             onClick={handleClick}
                             icon={<Next />}
                         />
                     </>
                 ) : (
-                    <>
-                        <Paragraph size="xxlarge">You submitted:</Paragraph>
-                        <Paragraph size="xxlarge">{currentValue}</Paragraph>
-                    </>
+                    renderWaitingForOtherPlayers()
                 )}
             </>
         );

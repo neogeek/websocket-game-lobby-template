@@ -36,8 +36,8 @@ const AdminScreen = ({ data, send }) => {
                 return (
                     <TalkingCharacter
                         dialogue={[
-                            'Okay, those profile pics are cute! Well... some of them are.',
-                            'Now guess how old everyone is based on their profile pic!'
+                            'Okay, those profile pictures are cute! Well... some of them are.',
+                            'Now guess how old everyone is based on their profile pictures!'
                         ]}
                     />
                 );
@@ -51,16 +51,6 @@ const AdminScreen = ({ data, send }) => {
                                 'Choose an occupation for this person!'
                             ]}
                         />
-                        {/*<Box>*/}
-                        {/*    {data.game.players*/}
-                        {/*        .filter(player => !player.isAdmin)*/}
-                        {/*        .map(player => player?.datingProfile)*/}
-                        {/*        .map(datingProfile => (*/}
-                        {/*            <DatingProfilePreview*/}
-                        {/*                datingProfile={datingProfile}*/}
-                        {/*            />*/}
-                        {/*        ))}*/}
-                        {/*</Box>*/}
                     </>
                 );
             case 5:
@@ -68,9 +58,33 @@ const AdminScreen = ({ data, send }) => {
                     <TalkingCharacter
                         dialogue={[
                             'Looks like everyone has a job now! Wow, capitalism sucks!',
-                            'Now guess where everyone works!'
+                            'Now decide where everyone works!'
                         ]}
                     />
+                );
+            case 6:
+                return (
+                    <>
+                        <TalkingCharacter
+                            dialogue={[
+                                `Ooh! Let's look at the dating profiles you all just created!`,
+                                `These are some really interesting choices 😏`,
+                                `Okay so the next thing we are gonna do is answer questions as these dating profiles.`,
+                                `But here's the catch - you'll only be able to contribute one to four words to the answer before you must pass the dating profile along to the next player for them to continue or end the response.`,
+                                `Basically... just do what it says to do on your phone and we'll reconvene as a group after 😉`
+                            ]}
+                        />
+                        <Box>
+                            {data.game.players
+                                .filter(player => !player.isAdmin)
+                                .map(player => player?.datingProfile)
+                                .map(datingProfile => (
+                                    <DatingProfilePreview
+                                        datingProfile={datingProfile}
+                                    />
+                                ))}
+                        </Box>
+                    </>
                 );
             default:
                 return <p>default</p>;
