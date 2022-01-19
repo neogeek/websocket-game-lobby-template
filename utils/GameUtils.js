@@ -16,8 +16,10 @@ export const getPlayer = (playerId, game) =>
 export const getDatingProfile = (datingProfileId, game) =>
     getPlayer(datingProfileId, game)?.datingProfile;
 
-export const everyDatingProfileHasField = (fieldName, game) => {
-    return game.players.every(
-        player => player.isAdmin || player?.datingProfile?.[fieldName]
+export const everyDatingProfileHasFields = (fieldNames, game) => {
+    return fieldNames.every(fieldName =>
+        game.players.every(
+            player => player.isAdmin || player?.datingProfile?.[fieldName]
+        )
     );
 };

@@ -8,7 +8,7 @@ import {
     getNextId,
     getPlayer,
     getDatingProfile,
-    everyDatingProfileHasField
+    everyDatingProfileHasFields
 } from './utils/GameUtils.js';
 
 const websocket = ({ port, server }) => {
@@ -56,26 +56,27 @@ const websocket = ({ port, server }) => {
 
             const game = await datastore.findGame(gameId);
 
-            if (everyDatingProfileHasField('userName', game)) {
+            if (everyDatingProfileHasFields(['userName'], game)) {
                 await datastore.endCurrentTurn(gameId);
             }
         }
     );
 
-    gameLobby.addEventListener('setField', async (data, datastore) => {
-        const { gameId, datingProfileId, fieldName } = data;
-        const value = data[fieldName];
+    gameLobby.addEventListener('setFields', async (data, datastore) => {
+        const { gameId, datingProfileId, fieldNames } = data;
 
         await datastore.editGame(gameId, async game => {
             const thisDatingProfile = getDatingProfile(datingProfileId, game);
-            thisDatingProfile[fieldName] = value;
 
+            fieldNames.forEach(fieldName => {
+                thisDatingProfile[fieldName] = data[fieldName];
+            });
             return game;
         });
 
         const game = await datastore.findGame(gameId);
 
-        if (everyDatingProfileHasField(fieldName, game)) {
+        if (everyDatingProfileHasFields(fieldNames, game)) {
             await datastore.editGame(gameId, async game => {
                 game.players.forEach(player => {
                     player.currentDatingProfileId = getNextId(

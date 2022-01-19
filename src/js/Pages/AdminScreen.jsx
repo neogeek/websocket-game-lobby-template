@@ -44,18 +44,33 @@ const AdminScreen = ({ data, send }) => {
             case 4:
                 return (
                     <>
-                        <TalkingCharacter dialogue={['poo poo!']} />
-                        <Box>
-                            {data.game.players
-                                .filter(player => !player.isAdmin)
-                                .map(player => player?.datingProfile)
-                                .map(datingProfile => (
-                                    <DatingProfilePreview
-                                        datingProfile={datingProfile}
-                                    />
-                                ))}
-                        </Box>
+                        <TalkingCharacter
+                            dialogue={[
+                                'You all made guesses. 🙄',
+                                'Ooh! This next one will be fun!',
+                                'Choose an occupation for this person!'
+                            ]}
+                        />
+                        {/*<Box>*/}
+                        {/*    {data.game.players*/}
+                        {/*        .filter(player => !player.isAdmin)*/}
+                        {/*        .map(player => player?.datingProfile)*/}
+                        {/*        .map(datingProfile => (*/}
+                        {/*            <DatingProfilePreview*/}
+                        {/*                datingProfile={datingProfile}*/}
+                        {/*            />*/}
+                        {/*        ))}*/}
+                        {/*</Box>*/}
                     </>
+                );
+            case 5:
+                return (
+                    <TalkingCharacter
+                        dialogue={[
+                            'Looks like everyone has a job now! Wow, capitalism sucks!',
+                            'Now guess where everyone works!'
+                        ]}
+                    />
                 );
             default:
                 return <p>default</p>;

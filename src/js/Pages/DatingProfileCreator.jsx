@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
-import { Box, Paragraph, Image } from 'grommet';
+import { Box, Paragraph, Image, Select } from 'grommet';
 import { Next } from 'grommet-icons';
 import lodash from 'lodash';
 import DatingProfilePreview from '../Components/DatingProfilePreview.jsx';
 import Button from '../Components/Button.jsx';
 import TextInput from '../Components/TextInput.jsx';
+
+import occupations from './Occupations.js';
+import companies from './Companies.js';
 
 const DatingProfileCreator = ({ data, send }) => {
     const currentDatingProfileId = data?.player?.currentDatingProfileId;
@@ -86,8 +89,8 @@ const DatingProfileCreator = ({ data, send }) => {
     const [isProfilePicSubmitted, setIsProfilePicSubmitted] = useState(false);
     const renderProfilePicSelector = () => {
         const handleClick = () => {
-            send('setField', {
-                fieldName: 'profilePic',
+            send('setFields', {
+                fieldNames: ['profilePic'],
                 profilePic: selectedImageUrl,
                 datingProfileId: currentDatingProfileId
             });
@@ -104,7 +107,7 @@ const DatingProfileCreator = ({ data, send }) => {
                     style={{ fontSize: '24px' }}
                     size="xxlarge"
                 >
-                    Select a profile picture for this dating profile:
+                    Select a profile picture for:
                 </Paragraph>
                 <DatingProfilePreview
                     datingProfile={{
@@ -164,8 +167,8 @@ const DatingProfileCreator = ({ data, send }) => {
     const [isAgeFormSubmitted, setIsAgeFormSubmitted] = useState(false);
     const renderAgeForm = () => {
         const handleClick = () => {
-            send('setField', {
-                fieldName: 'age',
+            send('setFields', {
+                fieldNames: ['age'],
                 age,
                 datingProfileId: currentDatingProfileId
             });
@@ -201,6 +204,136 @@ const DatingProfileCreator = ({ data, send }) => {
                 />
                 <Button
                     disabled={!age}
+                    size="xxlarge"
+                    primary
+                    reverse
+                    label="Submit"
+                    onClick={handleClick}
+                    icon={<Next />}
+                />
+            </Box>
+        ) : (
+            renderWaitingForOtherPlayers()
+        );
+    };
+
+    const [profession, setProfession] = useState();
+    const [professionOptions] = useState(lodash.sampleSize(occupations, 10));
+    const [isProfessionFormSubmitted, setIsProfessionFormSubmitted] =
+        useState(false);
+    const renderProfessionForm = () => {
+        const handleClick = () => {
+            send('setFields', {
+                fieldNames: ['profession'],
+                profession,
+                datingProfileId: currentDatingProfileId
+            });
+            setIsProfessionFormSubmitted(true);
+        };
+
+        return !isProfessionFormSubmitted ? (
+            <Box direction="column" style={{ alignItems: 'center' }}>
+                <Paragraph
+                    style={{ fontSize: '24px', marginRight: 'auto' }}
+                    size="xxlarge"
+                >
+                    What does this person do for work?
+                </Paragraph>
+                <Box
+                    margin="medium"
+                    animation="slideUp"
+                    height="medium"
+                    width="medium"
+                >
+                    <Image
+                        style={{ borderRadius: '15px' }}
+                        fit="cover"
+                        src={currentDatingProfile?.profilePic}
+                    />
+                </Box>
+                <Select
+                    laceholder="Job?"
+                    options={professionOptions}
+                    value={profession}
+                    onChange={({ option }) => setProfession(option)}
+                    style={{
+                        fontSize: '18px',
+                        padding: '25px',
+                        borderRadius: '15px',
+                        border: 'none',
+                        width: '100%',
+                        height: '100px',
+                        wordWrap: 'break-word'
+                    }}
+                />
+                <Button
+                    style={{ marginTop: '30px', width: '100%' }}
+                    disabled={!profession}
+                    size="xxlarge"
+                    primary
+                    reverse
+                    label="Submit"
+                    onClick={handleClick}
+                    icon={<Next />}
+                />
+            </Box>
+        ) : (
+            renderWaitingForOtherPlayers()
+        );
+    };
+
+    const [workplace, setWorkplace] = useState();
+    const [workplaceOptions] = useState(lodash.sampleSize(companies, 10));
+    const [isWorkplaceFormSubmitted, setIsWorkplaceFormSubmitted] =
+        useState(false);
+    const renderWorkplaceForm = () => {
+        const handleClick = () => {
+            send('setFields', {
+                fieldNames: ['workplace'],
+                workplace,
+                datingProfileId: currentDatingProfileId
+            });
+            setIsWorkplaceFormSubmitted(true);
+        };
+
+        return !isWorkplaceFormSubmitted ? (
+            <Box direction="column" style={{ alignItems: 'center' }}>
+                <Paragraph
+                    style={{ fontSize: '24px', marginRight: 'auto' }}
+                    size="xxlarge"
+                >
+                    Where does this person work?
+                </Paragraph>
+                <Box
+                    margin="medium"
+                    animation="slideUp"
+                    height="medium"
+                    width="medium"
+                >
+                    <Image
+                        style={{ borderRadius: '15px' }}
+                        fit="cover"
+                        src={currentDatingProfile?.profilePic}
+                    />
+                </Box>
+                <Select
+                    laceholder="Job?"
+                    options={workplaceOptions}
+                    value={workplace}
+                    onChange={({ option }) => setWorkplace(option)}
+                    style={{
+                        fontSize: '18px',
+                        padding: '25px',
+                        borderRadius: '15px',
+                        border: 'none',
+                        width: '100%',
+                        height: '100px',
+                        wordWrap: 'break-word'
+                    }}
+                />
+                <Button
+                    style={{ marginTop: '30px', width: '100%' }}
+                    disabled={!workplace}
                     size="xxlarge"
                     primary
                     reverse
@@ -333,9 +466,11 @@ const DatingProfileCreator = ({ data, send }) => {
             case 3:
                 return renderAgeForm();
             case 4:
-                return renderAnswerForm(0, 0, 1);
+                return renderProfessionForm();
             case 5:
-                return renderAnswerForm(0, 1, 3);
+                return renderWorkplaceForm();
+            case 6:
+                return renderAnswerForm(0, 0, 3);
             default:
                 return <p>default</p>;
         }
