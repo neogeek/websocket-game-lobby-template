@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Grommet } from 'grommet';
 import { deepMerge } from 'grommet/utils';
 import Game from './Game';
@@ -9,6 +9,9 @@ export const theme = deepMerge(Grommet, {
             family: 'IBM Plex Sans',
             size: '32px',
             height: '32px'
+        },
+        colors: {
+            secondaryText: '#585858'
         }
     }
 });

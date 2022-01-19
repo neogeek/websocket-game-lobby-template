@@ -1,5 +1,6 @@
 import React from 'react';
 import { Box, Image, Paragraph, ResponsiveContext } from 'grommet';
+import { FaBirthdayCake, FaBriefcase, FaMapMarkerAlt } from 'react-icons/fa';
 
 const DatingProfilePreview = ({ datingProfile }) => {
     console.log('datingProfile: ', datingProfile);
@@ -70,6 +71,45 @@ const DatingProfilePreview = ({ datingProfile }) => {
                 >
                     {datingProfile?.userName}
                 </Paragraph>
+                <Box direction="row" align="center">
+                    <FaBirthdayCake
+                        color="#585858"
+                        style={{ margin: 0 }}
+                        size={'16px'}
+                    />
+                    <Paragraph
+                        color="secondaryText"
+                        style={{ margin: '2px 0 0 6px' }}
+                    >
+                        38 years old
+                    </Paragraph>
+                </Box>
+                <Box direction="row" align="center">
+                    <FaBriefcase
+                        color="#585858"
+                        style={{ margin: 0 }}
+                        size={'16px'}
+                    />
+                    <Paragraph
+                        color="secondaryText"
+                        style={{ margin: '2px 0 0 6px' }}
+                    >
+                        Nurse at The Hospital
+                    </Paragraph>
+                </Box>
+                <Box direction="row" align="center">
+                    <FaMapMarkerAlt
+                        color="#585858"
+                        style={{ margin: 0 }}
+                        size={'16px'}
+                    />
+                    <Paragraph
+                        color="secondaryText"
+                        style={{ margin: '2px 0 0 6px' }}
+                    >
+                        Less than a mile away
+                    </Paragraph>
+                </Box>
             </Box>
         </Box>
     );
