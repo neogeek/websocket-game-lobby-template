@@ -439,8 +439,11 @@ const DatingProfileCreator = ({ data, send }) => {
                         ) : (
                             <>
                                 <Paragraph size="xxlarge">
-                                    Continue the following response
+                                    Continue the following response as
                                 </Paragraph>
+                                <DatingProfilePreview
+                                    datingProfile={currentDatingProfile}
+                                />
                                 <Paragraph size="xxlarge">
                                     {
                                         currentDatingProfile.answers[
@@ -498,6 +501,20 @@ const DatingProfileCreator = ({ data, send }) => {
                 return renderWorkplaceForm();
             case 6:
                 return renderAnswerForm(0, 0, 3);
+            case 7:
+                return renderAnswerForm(0, 1, 4);
+            case 8:
+                return renderAnswerForm(1, 0, 1);
+            case 9:
+                return renderAnswerForm(1, 1, 2);
+            case 10:
+                return renderAnswerForm(1, 2, 3);
+            case 11:
+                return renderAnswerForm(2, 0, 5);
+            case 12:
+                return renderAnswerForm(2, 1, 2);
+            case 13:
+                return renderAnswerForm(2, 2, 1);
             default:
                 return <p>default</p>;
         }
