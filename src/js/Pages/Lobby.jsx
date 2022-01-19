@@ -89,7 +89,9 @@ const Lobby = ({ data, send }) => {
                         style={{
                             fontSize: '90px',
                             fontWeight: 'bold',
-                            margin: '0 0 60px 0'
+                            margin: '0 0 60px 0',
+                            fontFamily: 'BioRhyme',
+                            letterSpacing: '25px'
                         }}
                     >
                         {data.game.gameCode}
@@ -148,11 +150,21 @@ const Lobby = ({ data, send }) => {
                 <Box
                     direction="column"
                     border={{ color: 'brand', size: 'large' }}
-                    pad="medium"
+                    pad="small"
                     margin="medium"
+                    background="brand"
+                    style={{ borderRadius: '5px' }}
                 >
                     <Main align="center" pad="small">
-                        <Heading size="medium">Magnetic Personality</Heading>
+                        <Heading
+                            style={{
+                                fontFamily: 'BioRhyme',
+                                color: 'white'
+                            }}
+                            size="large"
+                        >
+                            Magnetic Personality
+                        </Heading>
                         <Paragraph size="large">
                             The chaotic dating profile generator!
                         </Paragraph>
