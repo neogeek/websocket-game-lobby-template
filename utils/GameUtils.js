@@ -2,11 +2,17 @@ export const getNextId = (currentId, game) => {
     const currentIndex = game.players.findIndex(
         player => player.playerId === currentId
     );
+
     let resultIndex = currentIndex + 1;
 
     if (!game.players[resultIndex]) {
-        resultIndex = 1;
+        resultIndex = 0;
     }
+
+    if (game.players[resultIndex]?.isAdmin) {
+        return getNextId(game.players[resultIndex].playerId, game);
+    }
+
     return game.players[resultIndex].playerId;
 };
 

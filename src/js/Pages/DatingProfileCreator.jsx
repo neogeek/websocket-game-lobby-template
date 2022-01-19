@@ -8,6 +8,7 @@ import TextInput from '../Components/TextInput.jsx';
 
 import occupations from './Occupations.js';
 import companies from './Companies.js';
+import questions from './Questions.js';
 
 const DatingProfileCreator = ({ data, send }) => {
     const currentDatingProfileId = data?.player?.currentDatingProfileId;
@@ -40,7 +41,12 @@ const DatingProfileCreator = ({ data, send }) => {
 
     const renderUsernameForm = () => {
         const handleClick = () => {
-            send('setUsername', { userName });
+            send('setFields', {
+                fieldNames: ['userName'],
+                userName,
+                setProfilePictureOptions: true,
+                datingProfileId: data?.player?.playerId
+            });
             setIsUsernameFormSubmitted(true);
         };
 
@@ -88,6 +94,8 @@ const DatingProfileCreator = ({ data, send }) => {
     const [selectedImageUrl, setSelectedImageUrl] = useState('');
     const [isProfilePicSubmitted, setIsProfilePicSubmitted] = useState(false);
     const renderProfilePicSelector = () => {
+        console.log('currentDatingProfile: ', currentDatingProfile);
+
         const handleClick = () => {
             send('setFields', {
                 fieldNames: ['profilePic'],
@@ -111,8 +119,8 @@ const DatingProfileCreator = ({ data, send }) => {
                 </Paragraph>
                 <DatingProfilePreview
                     datingProfile={{
-                        ...currentDatingProfile,
-                        profilePic: selectedImageUrl
+                        profilePic: selectedImageUrl,
+                        ...currentDatingProfile
                     }}
                 />
                 <Box direction="row" justify="center" wrap>
@@ -224,8 +232,9 @@ const DatingProfileCreator = ({ data, send }) => {
     const renderProfessionForm = () => {
         const handleClick = () => {
             send('setFields', {
-                fieldNames: ['profession'],
+                fieldNames: ['profession', 'distance'],
                 profession,
+                distance: lodash.random(0, 30),
                 datingProfileId: currentDatingProfileId
             });
             setIsProfessionFormSubmitted(true);
@@ -289,8 +298,9 @@ const DatingProfileCreator = ({ data, send }) => {
     const renderWorkplaceForm = () => {
         const handleClick = () => {
             send('setFields', {
-                fieldNames: ['workplace'],
+                fieldNames: ['workplace', 'questions'],
                 workplace,
+                questions: lodash.sampleSize(questions, 3),
                 datingProfileId: currentDatingProfileId
             });
             setIsWorkplaceFormSubmitted(true);

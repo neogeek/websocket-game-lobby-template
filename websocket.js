@@ -26,44 +26,21 @@ const websocket = ({ port, server }) => {
             await datastore.editGame(gameId, async game => {
                 const thisPlayer = getPlayer(playerId, game);
                 thisPlayer.name = playerName;
+                thisPlayer.datingProfile = { userName: '' };
+                thisPlayer.currentDatingProfileId = playerId;
                 return game;
             });
-        }
-    );
-
-    gameLobby.addEventListener(
-        'setUsername',
-        async ({ gameId, playerId, userName }, datastore) => {
-            await datastore.editGame(gameId, async game => {
-                const thisPlayer = getPlayer(playerId, game);
-                thisPlayer.datingProfile = {
-                    userName,
-                    questions: [
-                        "I'm secretly good at...",
-                        'The best way to ask me out is to...',
-                        'You should leave a comment if...'
-                    ],
-                    answers: []
-                };
-
-                thisPlayer.currentDatingProfileId = getNextId(playerId, game);
-
-                thisPlayer.profilePictureOptions =
-                    await getProfilePictureOptions();
-
-                return game;
-            });
-
-            const game = await datastore.findGame(gameId);
-
-            if (everyDatingProfileHasFields(['userName'], game)) {
-                await datastore.endCurrentTurn(gameId);
-            }
         }
     );
 
     gameLobby.addEventListener('setFields', async (data, datastore) => {
-        const { gameId, datingProfileId, fieldNames } = data;
+        const {
+            gameId,
+            playerId,
+            datingProfileId,
+            fieldNames,
+            setProfilePictureOptions
+        } = data;
 
         await datastore.editGame(gameId, async game => {
             const thisDatingProfile = getDatingProfile(datingProfileId, game);
@@ -71,6 +48,13 @@ const websocket = ({ port, server }) => {
             fieldNames.forEach(fieldName => {
                 thisDatingProfile[fieldName] = data[fieldName];
             });
+
+            if (setProfilePictureOptions) {
+                const thisPlayer = getPlayer(playerId, game);
+                thisPlayer.profilePictureOptions =
+                    await getProfilePictureOptions();
+            }
+
             return game;
         });
 
