@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
-import { Box, Paragraph, TextInput, Button, Image } from 'grommet';
+import { Box, Paragraph, Image } from 'grommet';
 import { Next } from 'grommet-icons';
 import lodash from 'lodash';
 import DatingProfilePreview from '../Components/DatingProfilePreview.jsx';
+import Button from '../Components/Button.jsx';
+import TextInput from '../Components/TextInput.jsx';
 
 const DatingProfileCreator = ({ data, send }) => {
     const currentDatingProfileId = data?.player?.currentDatingProfileId;
@@ -92,22 +94,28 @@ const DatingProfileCreator = ({ data, send }) => {
                 <Paragraph size="xxlarge">
                     Select a profile picture for this dating profile:
                 </Paragraph>
-                <DatingProfilePreview datingProfile={currentDatingProfile} />
+                <DatingProfilePreview
+                    datingProfile={{
+                        ...currentDatingProfile,
+                        profilePic: selectedImageUrl
+                    }}
+                />
                 {isProfilePicSubmitted ? (
                     <>
-                        <Paragraph size="xxlarge">You selected:</Paragraph>
-                        <Box
-                            margin="medium"
-                            animation="slideUp"
-                            height="small"
-                            width="small"
+                        <Paragraph
+                            size="xxlarge"
+                            style={{
+                                fontSize: '68px',
+                                lineHeight: '68px',
+                                fontWeight: 'bold'
+                            }}
                         >
-                            <Image fit="cover" src={selectedImageUrl} />
-                        </Box>
+                            Waiting for other players...
+                        </Paragraph>
                     </>
                 ) : (
                     <>
-                        <Box direction="row" wrap>
+                        <Box direction="row" justify="center" wrap>
                             {data?.player?.profilePictureOptions.map(
                                 imageUrl => (
                                     <Box
@@ -137,11 +145,16 @@ const DatingProfileCreator = ({ data, send }) => {
                             )}
                         </Box>
                         <Button
+                            style={{
+                                position: 'fixed',
+                                width: '90%',
+                                bottom: '100px'
+                            }}
                             size="xxlarge"
                             disabled={!selectedImageUrl}
                             primary
                             reverse
-                            label="Continue"
+                            label="Submit"
                             onClick={handleClick}
                             icon={<Next />}
                         />
@@ -164,7 +177,7 @@ const DatingProfileCreator = ({ data, send }) => {
         };
 
         return !isAgeFormSubmitted ? (
-            <>
+            <Box direction="column" style={{ alignItems: 'center' }}>
                 <Paragraph size="xxlarge">How old is this person?</Paragraph>
                 <Box
                     margin="medium"
@@ -176,23 +189,32 @@ const DatingProfileCreator = ({ data, send }) => {
                 </Box>
                 <TextInput
                     type="number"
-                    placeholder="How old is this person?"
+                    placeholder="How old?"
                     value={age}
                     onChange={event => setAge(event.target.value)}
                     style={{ marginBottom: '24px' }}
                 />
                 <Button
-                    // disabled={!selectedImageUrl}
+                    disabled={!age}
                     size="xxlarge"
                     primary
                     reverse
-                    label="Continue"
+                    label="Submit"
                     onClick={handleClick}
                     icon={<Next />}
                 />
-            </>
+            </Box>
         ) : (
-            <Paragraph size="xxlarge">Age: {age}</Paragraph>
+            <Paragraph
+                size="xxlarge"
+                style={{
+                    fontSize: '68px',
+                    lineHeight: '68px',
+                    fontWeight: 'bold'
+                }}
+            >
+                Waiting for other players...
+            </Paragraph>
         );
     };
 
@@ -243,8 +265,11 @@ const DatingProfileCreator = ({ data, send }) => {
                         {answerIndex === 0 ? (
                             <>
                                 <Paragraph size="xxlarge">
-                                    Respond to the following prompt
+                                    Respond to the following prompt as
                                 </Paragraph>
+                                <DatingProfilePreview
+                                    datingProfile={currentDatingProfile}
+                                />
                                 <Paragraph size="xxlarge">
                                     {
                                         currentDatingProfile.questions[
@@ -276,7 +301,7 @@ const DatingProfileCreator = ({ data, send }) => {
                                     event.target.value
                                 )
                             }
-                            placeholder="Response..."
+                            placeholder="..."
                         />
                         <Button
                             disabled={
@@ -285,7 +310,7 @@ const DatingProfileCreator = ({ data, send }) => {
                             size="xxlarge"
                             primary
                             reverse
-                            label="Continue"
+                            label="Submit"
                             onClick={handleClick}
                             icon={<Next />}
                         />

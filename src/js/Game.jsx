@@ -32,9 +32,11 @@ const Game = () => {
 
     return (
         <Box
-            width="100vw"
-            height="100vh"
-            background="linear-gradient(62deg, #8EC5FC 0%, #E0C3FC 100%)"
+            style={{
+                minWidth: '100vw',
+                minHeight: '100vh',
+                background: 'linear-gradient(62deg, #8EC5FC 0%, #E0C3FC 100%)'
+            }}
         >
             {isInLobby && <Lobby data={data} send={send} />}
             {!isInLobby && isAdmin && <AdminScreen data={data} send={send} />}

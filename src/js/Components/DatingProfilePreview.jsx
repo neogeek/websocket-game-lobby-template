@@ -59,24 +59,24 @@ const DatingProfilePreview = ({ datingProfile }) => {
                     {datingProfile?.userName}
                     {datingProfile?.age ? `,${datingProfile?.age}` : null}
                 </Paragraph>
-                <Paragraph
-                    style={
-                        isSmall
-                            ? {
-                                  fontSize: '18px',
-                                  lineHeight: '18px',
-                                  maxWidth: '100%'
-                              }
-                            : {
-                                  fontSize: '32px',
-                                  lineHeight: '32px',
-                                  maxWidth: '100%'
-                              }
-                    }
-                >
-                    This is a short introduction about me! Get to know me. Love
-                    me. Become me. I am the darkness and I am the night.
-                </Paragraph>
+                {/*<Paragraph*/}
+                {/*    style={*/}
+                {/*        isSmall*/}
+                {/*            ? {*/}
+                {/*                  fontSize: '18px',*/}
+                {/*                  lineHeight: '18px',*/}
+                {/*                  maxWidth: '100%'*/}
+                {/*              }*/}
+                {/*            : {*/}
+                {/*                  fontSize: '32px',*/}
+                {/*                  lineHeight: '32px',*/}
+                {/*                  maxWidth: '100%'*/}
+                {/*              }*/}
+                {/*    }*/}
+                {/*>*/}
+                {/*    This is a short introduction about me! Get to know me. Love*/}
+                {/*    me. Become me. I am the darkness and I am the night.*/}
+                {/*</Paragraph>*/}
             </Box>
         </Box>
     );
