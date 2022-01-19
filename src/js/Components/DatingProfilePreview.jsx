@@ -71,45 +71,69 @@ const DatingProfilePreview = ({ datingProfile }) => {
                 >
                     {datingProfile?.userName}
                 </Paragraph>
-                <Box direction="row" align="center">
-                    <FaBirthdayCake
-                        color="#585858"
-                        style={{ margin: 0 }}
-                        size={'16px'}
-                    />
-                    <Paragraph
-                        color="secondaryText"
-                        style={{ margin: '2px 0 0 6px' }}
+                {datingProfile?.age ? (
+                    <Box
+                        style={{ marginBottom: '15px' }}
+                        direction="row"
+                        align="center"
                     >
-                        38 years old
-                    </Paragraph>
-                </Box>
-                <Box direction="row" align="center">
-                    <FaBriefcase
-                        color="#585858"
-                        style={{ margin: 0 }}
-                        size={'16px'}
-                    />
-                    <Paragraph
-                        color="secondaryText"
-                        style={{ margin: '2px 0 0 6px' }}
+                        <FaBirthdayCake
+                            color="#585858"
+                            style={{ margin: 0 }}
+                            size={'16px'}
+                        />
+                        <Paragraph
+                            color="secondaryText"
+                            style={{ margin: '2px 0 0 6px' }}
+                        >
+                            {datingProfile?.age} years old
+                        </Paragraph>
+                    </Box>
+                ) : null}
+                {datingProfile.profession && datingProfile.workplace ? (
+                    <Box
+                        style={{ marginBottom: '15px' }}
+                        direction="row"
+                        align="center"
                     >
-                        Nurse at The Hospital
-                    </Paragraph>
-                </Box>
-                <Box direction="row" align="center">
-                    <FaMapMarkerAlt
-                        color="#585858"
-                        style={{ margin: 0 }}
-                        size={'16px'}
-                    />
-                    <Paragraph
-                        color="secondaryText"
-                        style={{ margin: '2px 0 0 6px' }}
-                    >
-                        Less than a mile away
-                    </Paragraph>
-                </Box>
+                        <FaBriefcase
+                            color="#585858"
+                            style={{ margin: 0 }}
+                            size={'16px'}
+                        />
+                        <Box direction="column">
+                            <Paragraph
+                                color="secondaryText"
+                                style={{ margin: '2px 0 0 6px' }}
+                            >
+                                {datingProfile.profession} at{' '}
+                            </Paragraph>
+                            <Paragraph
+                                color="secondaryText"
+                                style={{ margin: '2px 0 0 6px' }}
+                            >
+                                {datingProfile.workplace}
+                            </Paragraph>
+                        </Box>
+                    </Box>
+                ) : null}
+                {datingProfile.distance ? (
+                    <Box direction="row" align="center">
+                        <FaMapMarkerAlt
+                            color="#585858"
+                            style={{ margin: 0 }}
+                            size={'16px'}
+                        />
+                        <Paragraph
+                            color="secondaryText"
+                            style={{ margin: '2px 0 0 6px' }}
+                        >
+                            {datingProfile.distance === 0
+                                ? 'Less than a mile away'
+                                : `${datingProfile.distance} miles away`}
+                        </Paragraph>
+                    </Box>
+                ) : null}
             </Box>
         </Box>
     );
