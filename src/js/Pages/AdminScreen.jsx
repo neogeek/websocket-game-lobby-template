@@ -86,8 +86,55 @@ const AdminScreen = ({ data, send }) => {
                         </Box>
                     </>
                 );
+            case 14:
+                return (
+                    <>
+                        <TalkingCharacter
+                            dialogue={[
+                                `These answers are so illuminating about everyone's personality!`,
+                                `I feel like I'm already in love with everyone! 😍`,
+                                `But alas... 😭 I don't get to match with these profiles.`,
+                                'YOU DO!',
+                                'Each player will match with one of these dating profiles. You will all vote to decide!',
+                                'On your device, read through each dating profile and cast your vote for which player should match with them.'
+                            ]}
+                        />
+                        <Box>
+                            {data.game.players
+                                .filter(player => !player.isAdmin)
+                                .map(player => player?.datingProfile)
+                                .map(datingProfile => (
+                                    <DatingProfilePreview
+                                        datingProfile={datingProfile}
+                                    />
+                                ))}
+                        </Box>
+                    </>
+                );
             default:
-                return <p>default</p>;
+                return (
+                    <>
+                        <TalkingCharacter
+                            dialogue={[
+                                `Ooh! Let's look at the dating profiles you all just created!`,
+                                `These are some really interesting choices 😏`,
+                                `Okay so the next thing we are gonna do is answer questions as these dating profiles.`,
+                                `But here's the catch - you'll only be able to contribute one to four words to the answer before you must pass the dating profile along to the next player for them to continue or end the response.`,
+                                `Basically... just do what it says to do on your phone and we'll reconvene as a group after 😉`
+                            ]}
+                        />
+                        <Box>
+                            {data.game.players
+                                .filter(player => !player.isAdmin)
+                                .map(player => player?.datingProfile)
+                                .map(datingProfile => (
+                                    <DatingProfilePreview
+                                        datingProfile={datingProfile}
+                                    />
+                                ))}
+                        </Box>
+                    </>
+                );
         }
     };
 
