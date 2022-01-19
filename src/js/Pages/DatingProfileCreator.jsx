@@ -126,6 +126,7 @@ const DatingProfileCreator = ({ data, send }) => {
                                 }
                             }
                             css={{
+                                borderRadius: '15px',
                                 cursor: 'pointer;',
                                 '&:hover': {
                                     border: '5px solid #7D4CDB;'
