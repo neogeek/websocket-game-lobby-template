@@ -86,30 +86,18 @@ const AdminScreen = ({ data, send }) => {
                         </Box>
                     </>
                 );
-            case 14:
+            case 15:
                 return (
-                    <>
-                        <TalkingCharacter
-                            dialogue={[
-                                `These answers are so illuminating about everyone's personality!`,
-                                `I feel like I'm already in love with everyone! 😍`,
-                                `But alas... 😭 I don't get to match with these profiles.`,
-                                'YOU DO!',
-                                'Each player will match with one of these dating profiles. You will all vote to decide!',
-                                'On your device, read through each dating profile and cast your vote for which player should match with them.'
-                            ]}
-                        />
-                        <Box>
-                            {data.game.players
-                                .filter(player => !player.isAdmin)
-                                .map(player => player?.datingProfile)
-                                .map(datingProfile => (
-                                    <DatingProfilePreview
-                                        datingProfile={datingProfile}
-                                    />
-                                ))}
-                        </Box>
-                    </>
+                    <TalkingCharacter
+                        dialogue={[
+                            `These answers are so illuminating about everyone's personality!`,
+                            `I feel like I'm already in love with everyone! 😍`,
+                            `But alas... 😭 I don't get to match with these profiles.`,
+                            'YOU DO!',
+                            'Each player will match with one of these dating profiles. You will all vote to decide!',
+                            'On your device, read through each dating profile and cast your vote for which player should match with them.'
+                        ]}
+                    />
                 );
             default:
                 return (

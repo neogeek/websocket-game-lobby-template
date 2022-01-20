@@ -1,9 +1,18 @@
 import React from 'react';
 import { Box, Image, Paragraph, ResponsiveContext } from 'grommet';
 import { FaBirthdayCake, FaBriefcase, FaMapMarkerAlt } from 'react-icons/fa';
+import { useWebSocketGameLobbyClient } from 'websocket-game-lobby-client-hooks';
+
+import { DataContext } from '../Game.jsx';
 
 const DatingProfilePreview = ({ datingProfile }) => {
-    console.log('datingProfile: ', datingProfile);
+    const data = React.useContext(DataContext);
+
+    console.log('data: ', data);
+
+    const canRenderAnswers = data.turn.index >= 15;
+
+    console.log('canRenderAnswers: ', canRenderAnswers);
 
     const size = React.useContext(ResponsiveContext);
     const isSmall = size === 'small';
@@ -138,30 +147,55 @@ const DatingProfilePreview = ({ datingProfile }) => {
                     ) : null}
                 </Box>
             </Box>
-            {datingProfile.questions.map((question, questionIndex) => (
-                <Box
-                    margin="medium"
-                    pad="medium"
-                    background="#EEF0EB"
-                    style={{ borderRadius: '15px' }}
-                >
-                    <Paragraph style={{ fontSize: '24px', fontWeight: '800' }}>
-                        {question}
-                    </Paragraph>
-                    <Paragraph
-                        style={{
-                            maxWidth: '100%',
-                            lineHeight: '48px',
-                            fontSize: '48px',
-                            fontWeight: '400'
-                        }}
-                    >
-                        {datingProfile.answers[questionIndex]
-                            .map(answer => answer[0])
-                            .join(' ')}
-                    </Paragraph>
-                </Box>
-            ))}
+            {canRenderAnswers &&
+            datingProfile?.questions &&
+            datingProfile?.answers
+                ? datingProfile.questions.map((question, questionIndex) => (
+                      <Box
+                          margin="medium"
+                          pad="medium"
+                          background="#EEF0EB"
+                          style={{ borderRadius: '15px' }}
+                      >
+                          <Paragraph
+                              style={
+                                  isSmall
+                                      ? {
+                                            fontSize: '16px',
+                                            fontWeight: '800'
+                                        }
+                                      : {
+                                            fontSize: '24px',
+                                            fontWeight: '800'
+                                        }
+                              }
+                          >
+                              {question}
+                          </Paragraph>
+                          <Paragraph
+                              style={
+                                  isSmall
+                                      ? {
+                                            maxWidth: '100%',
+                                            lineHeight: '21px',
+                                            fontSize: '20px',
+                                            fontWeight: '400'
+                                        }
+                                      : {
+                                            maxWidth: '100%',
+                                            lineHeight: '48px',
+                                            fontSize: '48px',
+                                            fontWeight: '400'
+                                        }
+                              }
+                          >
+                              {(datingProfile.answers[questionIndex] || [])
+                                  .map(answer => answer[0])
+                                  .join(' ')}
+                          </Paragraph>
+                      </Box>
+                  ))
+                : null}
         </Box>
     );
 };

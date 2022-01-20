@@ -6,6 +6,8 @@ import Lobby from './Pages/Lobby';
 import AdminScreen from './Pages/AdminScreen';
 import DatingProfileCreator from './Pages/DatingProfileCreator';
 
+export const DataContext = React.createContext();
+
 const Game = () => {
     const { data, connected, send } = useWebSocketGameLobbyClient({
         port: process.env.NODE_ENV === 'development' ? 5000 : undefined
@@ -31,22 +33,27 @@ const Game = () => {
     const isAdmin = data?.player?.isAdmin;
 
     return (
-        <Box
-            style={{
-                minWidth: '100vw',
-                minHeight: '100vh',
-                background: 'linear-gradient(62deg, #8EC5FC 0%, #E0C3FC 100%)'
-            }}
-        >
-            {isInLobby && <Lobby data={data} send={send} />}
-            {!isInLobby && isAdmin && <AdminScreen data={data} send={send} />}
-            {!isInLobby && !isAdmin && (
-                <DatingProfileCreator data={data} send={send} />
-            )}
-            {shouldShowDebug ? (
-                <pre>{JSON.stringify(data, null, 2)}</pre>
-            ) : null}
-        </Box>
+        <DataContext.Provider value={data}>
+            <Box
+                style={{
+                    minWidth: '100vw',
+                    minHeight: '100vh',
+                    background:
+                        'linear-gradient(62deg, #8EC5FC 0%, #E0C3FC 100%)'
+                }}
+            >
+                {isInLobby && <Lobby data={data} send={send} />}
+                {!isInLobby && isAdmin && (
+                    <AdminScreen data={data} send={send} />
+                )}
+                {!isInLobby && !isAdmin && (
+                    <DatingProfileCreator data={data} send={send} />
+                )}
+                {shouldShowDebug ? (
+                    <pre>{JSON.stringify(data, null, 2)}</pre>
+                ) : null}
+            </Box>
+        </DataContext.Provider>
     );
 };
 

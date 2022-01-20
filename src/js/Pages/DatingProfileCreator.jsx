@@ -439,7 +439,8 @@ const DatingProfileCreator = ({ data, send }) => {
                         ) : (
                             <>
                                 <Paragraph size="xxlarge">
-                                    Continue the following response as
+                                    {answerIndex === 2 ? 'finish' : 'continue'}{' '}
+                                    the following response as
                                 </Paragraph>
                                 <DatingProfilePreview
                                     datingProfile={currentDatingProfile}
@@ -484,6 +485,30 @@ const DatingProfileCreator = ({ data, send }) => {
         );
     };
 
+    const renderVotingForm = () => {
+        return (data?.game?.players || [])
+            .filter(player => !player.isAdmin)
+            .map(player => (
+                <Box direction="column">
+                    <DatingProfilePreview
+                        datingProfile={player.datingProfile}
+                    />
+                    <Paragraph
+                        style={{ fontSize: '24px', fontWeight: 400 }}
+                        margin="medium"
+                    >
+                        Who should match with {player.datingProfile.userName}?
+                    </Paragraph>
+                    <Select
+                        options={(data?.game?.players || []).filter(
+                            player => !player.isAdmin
+                        )}
+                        labelKey="name"
+                    />
+                </Box>
+            ));
+    };
+
     const renderFormStep = () => {
         const currentTurn = data?.turn?.index || 0;
         switch (currentTurn) {
@@ -504,17 +529,21 @@ const DatingProfileCreator = ({ data, send }) => {
             case 7:
                 return renderAnswerForm(0, 1, 4);
             case 8:
-                return renderAnswerForm(1, 0, 1);
+                return renderAnswerForm(0, 2, 1);
             case 9:
-                return renderAnswerForm(1, 1, 2);
+                return renderAnswerForm(1, 0, 1);
             case 10:
-                return renderAnswerForm(1, 2, 3);
+                return renderAnswerForm(1, 1, 2);
             case 11:
-                return renderAnswerForm(2, 0, 5);
+                return renderAnswerForm(1, 2, 3);
             case 12:
-                return renderAnswerForm(2, 1, 2);
+                return renderAnswerForm(2, 0, 5);
             case 13:
+                return renderAnswerForm(2, 1, 2);
+            case 14:
                 return renderAnswerForm(2, 2, 1);
+            case 15:
+                return renderVotingForm();
             default:
                 return <p>default</p>;
         }
