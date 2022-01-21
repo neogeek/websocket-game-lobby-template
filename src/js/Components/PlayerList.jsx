@@ -8,7 +8,7 @@ const PlayerList = ({ players }) => {
                 Players:
             </Paragraph>
             {players.filter(player => !player.isAdmin).map(player => (
-                <Box style={{ borderRadius: '15px', color: 'white', background: 'black' }} pad="medium" margin="medium"><Paragraph style={{ fontSize: '60px', fontWeight: '800' }}>{player.name}</Paragraph></Box>
+                <Box key={player.playerId} style={{ borderRadius: '15px', color: 'white', background: 'black' }} pad="medium" margin="medium"><Paragraph style={{ fontSize: '60px', fontWeight: '800' }}>{player.name}</Paragraph></Box>
                 ))}
         </Box>
     );
