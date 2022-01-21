@@ -412,8 +412,9 @@ const DatingProfileCreator = ({ data, send }) => {
             });
         };
 
+        const numberOfWords = currentValue?.split(' ').filter(char => char).length
+
         const getButtonLabel = () => {
-            const numberOfWords = (currentValue?.split(' ') || []).length;
 
             if (!numberOfWords) {
                 return `${wordCount} words remaining`;
@@ -476,7 +477,7 @@ const DatingProfileCreator = ({ data, send }) => {
                         <Button
                             style={{ marginTop: '30px' }}
                             disabled={
-                                currentValue?.split(' ').length !== wordCount
+                                numberOfWords !== wordCount
                             }
                             primary
                             reverse
@@ -565,7 +566,13 @@ const DatingProfileCreator = ({ data, send }) => {
     const renderVotingResults = () => {
         const { match } = data.player
 
-        const matchingPlayer = data.players.find(player => player.playerId === match).datingProfile
+        console.log('data: ', data)
+
+        console.log('match: ', match)
+
+        const matchingPlayer = data.game.players?.find(player => player.playerId === match).datingProfile
+
+        console.log('matchingPlayer: ', matchingPlayer)
 
         return <Box pad="medium">
             <Paragraph style={{ fontSize: '70px', lineHeight: '100px' }}>❤️ It's a match! ❤️</Paragraph>
