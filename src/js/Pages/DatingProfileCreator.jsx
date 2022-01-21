@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Box, Paragraph, Image, Select } from 'grommet';
+import { Box, Paragraph, Image } from 'grommet';
 import { Next } from 'grommet-icons';
 import lodash from 'lodash';
 import DatingProfilePreview from '../Components/DatingProfilePreview.jsx';
@@ -77,7 +77,6 @@ const DatingProfileCreator = ({ data, send }) => {
                 />
                 <Button
                     style={{ fontSize: '48px', padding: '30px' }}
-                    size="xxlarge"
                     disabled={!userName}
                     primary
                     reverse
@@ -126,6 +125,7 @@ const DatingProfileCreator = ({ data, send }) => {
                 <Box direction="row" justify="center" wrap>
                     {data?.player?.profilePictureOptions.map(imageUrl => (
                         <Box
+                            key={imageUrl}
                             margin="medium"
                             animation="slideUp"
                             height="small"
@@ -159,7 +159,6 @@ const DatingProfileCreator = ({ data, send }) => {
                         width: '90%',
                         bottom: '60px'
                     }}
-                    size="xxlarge"
                     disabled={!selectedImageUrl}
                     primary
                     reverse
@@ -212,7 +211,6 @@ const DatingProfileCreator = ({ data, send }) => {
                 />
                 <Button
                     disabled={!age}
-                    size="xxlarge"
                     primary
                     reverse
                     label="Submit"
@@ -225,8 +223,9 @@ const DatingProfileCreator = ({ data, send }) => {
         );
     };
 
-    const [profession, setProfession] = useState();
-    const [professionOptions] = useState(lodash.sampleSize(occupations, 10));
+    const professionOptionsData = lodash.sampleSize(occupations, 10);
+    const [profession, setProfession] = useState(professionOptionsData[0]);
+    const [professionOptions] = useState(professionOptionsData);
     const [isProfessionFormSubmitted, setIsProfessionFormSubmitted] =
         useState(false);
     const renderProfessionForm = () => {
@@ -260,25 +259,29 @@ const DatingProfileCreator = ({ data, send }) => {
                         src={currentDatingProfile?.profilePic}
                     />
                 </Box>
-                <Select
-                    laceholder="Job?"
-                    options={professionOptions}
-                    value={profession}
-                    onChange={({ option }) => setProfession(option)}
-                    style={{
-                        fontSize: '18px',
-                        padding: '25px',
-                        borderRadius: '15px',
-                        border: 'none',
+                <select
+                    width="100%"
+                    height="100%"
+                    css={{
                         width: '100%',
                         height: '100px',
-                        wordWrap: 'break-word'
+                        fontSize: '24px',
+                        borderRadius: '15px',
+                        padding: '15px',
+                        border: 'none'
                     }}
-                />
+                    value={profession}
+                    onChange={event => setProfession(event.target.value)}
+                >
+                    {professionOptions.map(profession => (
+                        <option key={profession} value={profession}>
+                            {profession}
+                        </option>
+                    ))}
+                </select>
                 <Button
                     style={{ marginTop: '30px', width: '100%' }}
                     disabled={!profession}
-                    size="xxlarge"
                     primary
                     reverse
                     label="Submit"
@@ -291,8 +294,9 @@ const DatingProfileCreator = ({ data, send }) => {
         );
     };
 
-    const [workplace, setWorkplace] = useState();
-    const [workplaceOptions] = useState(lodash.sampleSize(companies, 10));
+    const companyData = lodash.sampleSize(companies, 10);
+    const [workplace, setWorkplace] = useState(companyData[0]);
+    const [workplaceOptions] = useState(companyData);
     const [isWorkplaceFormSubmitted, setIsWorkplaceFormSubmitted] =
         useState(false);
     const renderWorkplaceForm = () => {
@@ -326,25 +330,29 @@ const DatingProfileCreator = ({ data, send }) => {
                         src={currentDatingProfile?.profilePic}
                     />
                 </Box>
-                <Select
-                    laceholder="Job?"
-                    options={workplaceOptions}
+                <select
                     value={workplace}
-                    onChange={({ option }) => setWorkplace(option)}
+                    onChange={event => setWorkplace(event.target.value)}
                     style={{
-                        fontSize: '18px',
-                        padding: '25px',
+                        fontSize: '24px',
+                        padding: '15px',
                         borderRadius: '15px',
                         border: 'none',
                         width: '100%',
                         height: '100px',
                         wordWrap: 'break-word'
                     }}
-                />
+                >
+                    {workplaceOptions.map(workplace => (
+                        <option key={workplace} value={workplace}>
+                            {workplace}
+                        </option>
+                    ))}
+                </select>
+
                 <Button
                     style={{ marginTop: '30px', width: '100%' }}
                     disabled={!workplace}
-                    size="xxlarge"
                     primary
                     reverse
                     label="Submit"
@@ -470,7 +478,6 @@ const DatingProfileCreator = ({ data, send }) => {
                             disabled={
                                 currentValue?.split(' ').length !== wordCount
                             }
-                            size="xxlarge"
                             primary
                             reverse
                             label={getButtonLabel()}
@@ -485,28 +492,78 @@ const DatingProfileCreator = ({ data, send }) => {
         );
     };
 
+    const [currentVotingIndex, setCurrentVotingIndex] = useState(0);
+    const [votePlayerId, setVotePlayerId] = useState(
+        (data?.game?.players || []).filter(player => !player.isAdmin)[0]
+            .playerId
+    );
+
+    console.log('votePlayerId: ', votePlayerId);
+
     const renderVotingForm = () => {
-        return (data?.game?.players || [])
-            .filter(player => !player.isAdmin)
-            .map(player => (
-                <Box direction="column">
-                    <DatingProfilePreview
-                        datingProfile={player.datingProfile}
-                    />
-                    <Paragraph
-                        style={{ fontSize: '24px', fontWeight: 400 }}
-                        margin="medium"
-                    >
-                        Who should match with {player.datingProfile.userName}?
-                    </Paragraph>
-                    <Select
-                        options={(data?.game?.players || []).filter(
-                            player => !player.isAdmin
-                        )}
-                        labelKey="name"
-                    />
-                </Box>
-            ));
+        const player = (data?.game?.players || []).filter(
+            player => !player.isAdmin
+        )[currentVotingIndex];
+
+        const handleClick = () => {
+            setCurrentVotingIndex(prev => prev + 1);
+
+            console.log({ datingProfileId: player.playerId, votePlayerId });
+
+            send('vote', {
+                datingProfileId: player.playerId,
+                votePlayerId
+            });
+        };
+
+        return player ? (
+            <Box direction="column">
+                <DatingProfilePreview datingProfile={player?.datingProfile} />
+                <Paragraph
+                    style={{ fontSize: '24px', fontWeight: 400 }}
+                    margin="medium"
+                >
+                    Who should match with {player.datingProfile.userName}?
+                </Paragraph>
+                <select
+                    value={votePlayerId}
+                    onChange={event => setVotePlayerId(event.target.value)}
+                    style={{
+                        fontSize: '24px',
+                        padding: '15px',
+                        borderRadius: '15px',
+                        border: 'none',
+                        width: '100%',
+                        height: '100px',
+                        wordWrap: 'break-word'
+                    }}
+                >
+                    {(data?.game?.players || [])
+                        .filter(player => !player.isAdmin)
+                        .map(player => (
+                            <option
+                                key={player.playerId}
+                                value={player.playerId}
+                            >
+                                {player.name}
+                            </option>
+                        ))}
+                </select>
+                <Button
+                    style={{ marginTop: '30px', width: '100%' }}
+                    disabled={false}
+                    primary
+                    reverse
+                    label="Submit"
+                    onClick={handleClick}
+                    icon={<Next />}
+                />
+            </Box>
+        ) : renderWaitingForOtherPlayers();
+    };
+
+    const renderVotingResults = () => {
+        return <Box>Voting results</Box>;
     };
 
     const renderFormStep = () => {
@@ -544,6 +601,8 @@ const DatingProfileCreator = ({ data, send }) => {
                 return renderAnswerForm(2, 2, 1);
             case 15:
                 return renderVotingForm();
+            case 16:
+                return renderVotingResults();
             default:
                 return <p>default</p>;
         }

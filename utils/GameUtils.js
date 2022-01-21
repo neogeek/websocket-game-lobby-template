@@ -25,6 +25,7 @@ export const getDatingProfile = (datingProfileId, game) =>
     getPlayer(datingProfileId, game)?.datingProfile;
 
 export const everyDatingProfileHasFields = (fieldNames, game) => {
+    console.log('fieldNames: ', fieldNames);
     return fieldNames.every(fieldName =>
         game.players.every(
             player =>

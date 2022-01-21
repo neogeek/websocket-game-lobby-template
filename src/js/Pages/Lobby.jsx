@@ -39,7 +39,6 @@ const Lobby = ({ data, send }) => {
                         padding: '30px',
                         marginBottom: '24px'
                     }}
-                    size="xxlarge"
                     primary
                     label="Create New Game"
                     onClick={() => send('create')}
@@ -49,7 +48,6 @@ const Lobby = ({ data, send }) => {
                 <>
                     <Button
                         style={{ fontSize: '48px', padding: '30px' }}
-                        size="xxlarge"
                         primary
                         label="Submit"
                         style={{ marginBottom: '24px' }}
@@ -57,7 +55,6 @@ const Lobby = ({ data, send }) => {
                     />
                     <Button
                         style={{ fontSize: '48px', padding: '30px' }}
-                        size="xxlarge"
                         primary
                         label="Back"
                         onClick={() => setIsOnJoinForm(false)}
@@ -66,7 +63,6 @@ const Lobby = ({ data, send }) => {
             ) : (
                 <Button
                     style={{ fontSize: '48px', padding: '30px' }}
-                    size="xxlarge"
                     primary
                     label="Join Existing Game"
                     onClick={() => setIsOnJoinForm(true)}
@@ -97,7 +93,6 @@ const Lobby = ({ data, send }) => {
                         {data.game.gameCode}
                     </Paragraph>
                     <Button
-                        size="xxlarge"
                         primary
                         label="Leave Game"
                         onClick={() => send('leave')}
@@ -107,7 +102,6 @@ const Lobby = ({ data, send }) => {
                         <>
                             <Button
                                 style={{ fontSize: '48px', padding: '30px' }}
-                                size="xxlarge"
                                 primary
                                 label="Start Game"
                                 disabled={!enoughPlayers}

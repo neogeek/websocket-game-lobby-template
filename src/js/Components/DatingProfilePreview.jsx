@@ -152,6 +152,7 @@ const DatingProfilePreview = ({ datingProfile }) => {
             datingProfile?.answers
                 ? datingProfile.questions.map((question, questionIndex) => (
                       <Box
+                          key={question}
                           margin="medium"
                           pad="medium"
                           background="#EEF0EB"

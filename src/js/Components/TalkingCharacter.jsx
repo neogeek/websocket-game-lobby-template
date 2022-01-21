@@ -44,7 +44,6 @@ const TalkingCharacter = ({ dialogue }) => {
             </Paragraph>
             {dialogue[index + 1] ? (
                 <Button
-                    size="xxlarge"
                     primary
                     reverse
                     label="Continue"
