@@ -3,6 +3,8 @@ import { Box } from 'grommet';
 import TalkingCharacter from '../Components/TalkingCharacter.jsx';
 import DatingProfilePreview from '../Components/DatingProfilePreview.jsx';
 
+import Button from '../Components/Button.jsx'
+
 const AdminScreen = ({ data, send }) => {
     const render = () => {
         const currentTurn = data?.turn?.index || 0;
@@ -101,12 +103,15 @@ const AdminScreen = ({ data, send }) => {
                 );
             case 16:
                 return (
+                    <>
                     <TalkingCharacter
                         dialogue={[
                             `Okay the results are in! Everyone look at your device to see who your match is!`,
                             `Thanks for playing!`
                         ]}
                     />
+                        <Button onClick={() => send('leave')} margin="medium" style={{ marginTop: '30px' }} primary label="Leave Game" />
+                        </>
                 );
             default:
                 return (

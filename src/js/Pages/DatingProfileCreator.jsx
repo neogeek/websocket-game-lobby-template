@@ -565,18 +565,12 @@ const DatingProfileCreator = ({ data, send }) => {
 
     const renderVotingResults = () => {
         const { match } = data.player
-
-        console.log('data: ', data)
-
-        console.log('match: ', match)
-
         const matchingPlayer = data.game.players?.find(player => player.playerId === match).datingProfile
-
-        console.log('matchingPlayer: ', matchingPlayer)
 
         return <Box pad="medium">
             <Paragraph style={{ fontSize: '70px', lineHeight: '100px' }}>❤️ It's a match! ❤️</Paragraph>
             <DatingProfilePreview datingProfile={matchingPlayer}/>
+            <Button onClick={() => send('leave')} style={{ marginTop: '30px' }} primary label="Leave Game" />
         </Box>;
     };
 
