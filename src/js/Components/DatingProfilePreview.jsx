@@ -91,11 +91,11 @@ const DatingProfilePreview = ({ datingProfile }) => {
                             <FaBirthdayCake
                                 color="#585858"
                                 style={{ margin: 0 }}
-                                size={'16px'}
+                                size={isSmall ? '16px' : '24px'}
                             />
                             <Paragraph
                                 color="secondaryText"
-                                style={{ margin: '2px 0 0 6px' }}
+                                style={isSmall ? { margin: '2px 0 0 6px' } : { margin: '2px 0 0 6px', fontSize: '24px' }}
                             >
                                 {datingProfile?.age} years old
                             </Paragraph>
@@ -110,18 +110,18 @@ const DatingProfilePreview = ({ datingProfile }) => {
                             <FaBriefcase
                                 color="#585858"
                                 style={{ margin: 0 }}
-                                size={'16px'}
+                                size={isSmall ? '16px' : '24px'}
                             />
                             <Box direction={isSmall ? 'column' : 'row'}>
                                 <Paragraph
                                     color="secondaryText"
-                                    style={{ margin: '2px 0 0 6px' }}
+                                    style={isSmall ? { margin: '2px 0 0 6px' } : { margin: '2px 0 0 6px', fontSize: '24px' }}
                                 >
                                     {datingProfile.profession} at{' '}
                                 </Paragraph>
                                 <Paragraph
                                     color="secondaryText"
-                                    style={{ margin: '2px 0 0 6px' }}
+                                    style={isSmall ? { margin: '2px 0 0 6px' } : { margin: '2px 0 0 6px', fontSize: '24px' }}
                                 >
                                     {datingProfile.workplace}
                                 </Paragraph>
@@ -133,11 +133,11 @@ const DatingProfilePreview = ({ datingProfile }) => {
                             <FaMapMarkerAlt
                                 color="#585858"
                                 style={{ margin: 0 }}
-                                size={'16px'}
+                                size={isSmall ? '16px' : '24px'}
                             />
                             <Paragraph
                                 color="secondaryText"
-                                style={{ margin: '2px 0 0 6px' }}
+                                style={isSmall ? { margin: '2px 0 0 6px' } : { margin: '2px 0 0 6px', fontSize: '24px' }}
                             >
                                 {datingProfile.distance === 0
                                     ? 'Less than a mile away'
