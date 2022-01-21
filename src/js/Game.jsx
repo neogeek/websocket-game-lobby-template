@@ -13,14 +13,13 @@ const Game = () => {
         port: process.env.NODE_ENV === 'development' ? 5000 : undefined
     });
 
-    const [shouldShowDebug, setShouldShowDebug] = useState(false);
-
     const handleUserKeyPress = useCallback(event => {
         const { keyCode } = event;
         if (keyCode === 192) {
-            setShouldShowDebug(prev => !prev);
+            // Useful for debug
+            console.log('data: ', data)
         }
-    }, []);
+    }, [data]);
 
     useEffect(() => {
         window.addEventListener('keydown', handleUserKeyPress);
@@ -49,9 +48,6 @@ const Game = () => {
                 {!isInLobby && !isAdmin && (
                     <DatingProfileCreator data={data} send={send} />
                 )}
-                {shouldShowDebug ? (
-                    <pre>{JSON.stringify(data, null, 2)}</pre>
-                ) : null}
             </Box>
         </DataContext.Provider>
     );

@@ -99,6 +99,15 @@ const AdminScreen = ({ data, send }) => {
                         ]}
                     />
                 );
+            case 16:
+                return (
+                    <TalkingCharacter
+                        dialogue={[
+                            `Okay the results are in! Everyone look at your device to see who your match is!`,
+                            `Thanks for playing!`
+                        ]}
+                    />
+                );
             default:
                 return (
                     <>

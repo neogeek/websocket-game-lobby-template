@@ -563,7 +563,14 @@ const DatingProfileCreator = ({ data, send }) => {
     };
 
     const renderVotingResults = () => {
-        return <Box>Voting results</Box>;
+        const { match } = data.player
+
+        const matchingPlayer = data.players.find(player => player.playerId === match).datingProfile
+
+        return <Box pad="medium">
+            <Paragraph style={{ fontSize: '70px', lineHeight: '100px' }}>❤️ It's a match! ❤️</Paragraph>
+            <DatingProfilePreview datingProfile={matchingPlayer}/>
+        </Box>;
     };
 
     const renderFormStep = () => {

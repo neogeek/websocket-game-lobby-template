@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Paragraph, List } from 'grommet';
+import { Box, Paragraph } from 'grommet';
 
 const PlayerList = ({ players }) => {
     return (
@@ -7,10 +7,9 @@ const PlayerList = ({ players }) => {
             <Paragraph style={{ fontSize: '48px', fontWeight: 'bold' }}>
                 Players:
             </Paragraph>
-            <List
-                primaryKey="name"
-                data={players.filter(player => !player.isAdmin)}
-            />
+            {players.filter(player => !player.isAdmin).map(player => (
+                <Box style={{ borderRadius: '15px', color: 'white', background: 'black' }} pad="medium" margin="medium"><Paragraph style={{ fontSize: '60px', fontWeight: '800' }}>{player.name}</Paragraph></Box>
+                ))}
         </Box>
     );
 };

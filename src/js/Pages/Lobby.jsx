@@ -83,7 +83,7 @@ const Lobby = ({ data, send }) => {
                     </Paragraph>
                     <Paragraph
                         style={{
-                            fontSize: '90px',
+                            fontSize: '60px',
                             fontWeight: 'bold',
                             margin: '0 0 60px 0',
                             fontFamily: 'BioRhyme',
