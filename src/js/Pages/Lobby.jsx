@@ -23,7 +23,7 @@ const Lobby = ({ data, send }) => {
                         style={{ marginBottom: '24px' }}
                         placeholder="Game Code"
                         value={gameCode}
-                        onChange={e => setGameCode(e.target.value)}
+                        onChange={e => setGameCode((e.target.value || '').toUpperCase())}
                     />
                     <TextInput
                         style={{ marginBottom: '24px' }}
