@@ -1,6 +1,6 @@
 import {
     WebSocketGameLobbyServer,
-    PostgresDataStore
+    EphemeralDataStore
 } from 'websocket-game-lobby';
 
 import lodash from 'lodash';
@@ -14,7 +14,7 @@ import {
 } from './utils/GameUtils.js';
 
 const websocket = ({ port, server }) => {
-    const datastore = new PostgresDataStore();
+    const datastore = new EphemeralDataStore();
 
     const gameLobby = new WebSocketGameLobbyServer({
         port,
