@@ -33,3 +33,7 @@ export const everyDatingProfileHasFields = (fieldNames, game) => {
         )
     );
 };
+
+// Word count is a random number between 2 and 5
+export const getRandomWordCount = () =>
+  Math.floor(Math.random() * 4) + 2;
