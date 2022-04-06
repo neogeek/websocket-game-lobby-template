@@ -517,6 +517,7 @@ const DatingProfileCreator = ({ data, send }) => {
                 datingProfileId: player.playerId,
                 votePlayerId
             });
+            window.scrollTo(0, 0)
         };
 
         return player ? (
