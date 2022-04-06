@@ -1,4 +1,7 @@
 {
+  "engines": {
+    "npm": "6.x"
+  },
   "dependencies": {
     "grommet": "^2.20.0",
     "grommet-icons": "^4.7.0",
