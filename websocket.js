@@ -10,7 +10,8 @@ import {
     getNextId,
     getPlayer,
     getDatingProfile,
-    everyDatingProfileHasFields
+    everyDatingProfileHasFields,
+    getRandomWordCount
 } from './utils/GameUtils.js';
 
 const websocket = ({ port, server }) => {
@@ -30,6 +31,7 @@ const websocket = ({ port, server }) => {
                 thisPlayer.name = playerName;
                 thisPlayer.datingProfile = { userName: '' };
                 thisPlayer.currentDatingProfileId = playerId;
+                thisPlayer.wordCount = getRandomWordCount();
                 return game;
             });
         }
@@ -91,6 +93,8 @@ const websocket = ({ port, server }) => {
             datastore
         ) => {
             await datastore.editGame(gameId, async game => {
+                const thisPlayer = getPlayer(playerId, game);
+                thisPlayer.wordCount = getRandomWordCount();
                 const thisDatingProfile = getDatingProfile(
                     datingProfileId,
                     game

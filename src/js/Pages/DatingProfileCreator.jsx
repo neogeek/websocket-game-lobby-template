@@ -12,6 +12,8 @@ import questions from './Questions.js';
 
 const DatingProfileCreator = ({ data, send }) => {
     const currentDatingProfileId = data?.player?.currentDatingProfileId;
+    console.log(data?.player);
+    const wordCount = data?.player?.wordCount;
 
     const currentDatingProfile = data?.game?.players?.find(
         player => player.playerId === currentDatingProfileId
@@ -388,7 +390,7 @@ const DatingProfileCreator = ({ data, send }) => {
         setAnswers(result);
     };
 
-    const renderAnswerForm = (questionIndex, answerIndex, wordCount) => {
+    const renderAnswerForm = (questionIndex, answerIndex) => {
         const currentValue = lodash.get(answers, [
             questionIndex,
             answerIndex,
@@ -590,23 +592,23 @@ const DatingProfileCreator = ({ data, send }) => {
             case 5:
                 return renderWorkplaceForm();
             case 6:
-                return renderAnswerForm(0, 0, 3);
+                return renderAnswerForm(0, 0);
             case 7:
-                return renderAnswerForm(0, 1, 4);
+                return renderAnswerForm(0, 1);
             case 8:
-                return renderAnswerForm(0, 2, 1);
+                return renderAnswerForm(0, 2);
             case 9:
-                return renderAnswerForm(1, 0, 1);
+                return renderAnswerForm(1, 0);
             case 10:
-                return renderAnswerForm(1, 1, 2);
+                return renderAnswerForm(1, 1);
             case 11:
-                return renderAnswerForm(1, 2, 3);
+                return renderAnswerForm(1, 2);
             case 12:
-                return renderAnswerForm(2, 0, 5);
+                return renderAnswerForm(2, 0);
             case 13:
-                return renderAnswerForm(2, 1, 2);
+                return renderAnswerForm(2, 1);
             case 14:
-                return renderAnswerForm(2, 2, 1);
+                return renderAnswerForm(2, 2);
             case 15:
                 return renderVotingForm();
             case 16:
