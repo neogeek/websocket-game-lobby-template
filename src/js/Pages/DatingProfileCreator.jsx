@@ -5,6 +5,7 @@ import lodash from 'lodash';
 import DatingProfilePreview from '../Components/DatingProfilePreview.jsx';
 import Button from '../Components/Button.jsx';
 import TextInput from '../Components/TextInput.jsx';
+import UsernameForm from '../Components/UsernameForm.jsx';
 
 import occupations from './Occupations.js';
 import companies from './Companies.js';
@@ -42,51 +43,8 @@ const DatingProfileCreator = ({ data, send }) => {
         useState(false);
 
     const renderUsernameForm = () => {
-        const handleClick = () => {
-            send('setFields', {
-                fieldNames: ['userName'],
-                userName,
-                setProfilePictureOptions: true,
-                datingProfileId: data?.player?.playerId
-            });
-            setIsUsernameFormSubmitted(true);
-        };
-
         return !isUsernameFormSubmitted ? (
-            <>
-                <Paragraph
-                    style={{
-                        fontSize: '68px',
-                        lineHeight: '68px',
-                        fontWeight: 'bold'
-                    }}
-                    size="xxlarge"
-                >
-                    Choose a username!
-                </Paragraph>
-                <TextInput
-                    placeholder="username"
-                    value={userName}
-                    onChange={event => setUsername(event.target.value)}
-                    style={{
-                        marginBottom: '24px',
-                        fontSize: '48px',
-                        padding: '30px',
-                        borderRadius: '15px',
-                        border: 'none',
-                        backgroundColor: 'white'
-                    }}
-                />
-                <Button
-                    style={{ fontSize: '48px', padding: '30px' }}
-                    disabled={!userName}
-                    primary
-                    reverse
-                    label="Submit"
-                    onClick={handleClick}
-                    icon={<Next />}
-                />
-            </>
+            <UsernameForm data={data} send={send} setIsUsernameFormSubmitted={setIsUsernameFormSubmitted}  />
         ) : (
             renderWaitingForOtherPlayers()
         );
