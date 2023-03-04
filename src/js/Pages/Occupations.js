@@ -258,4 +258,5 @@ export default [
     'Dungeon Master',
     'Sandwich Artist',
     'Snow Cone Technician"
+    'Game Stonks Ape',
 ];
