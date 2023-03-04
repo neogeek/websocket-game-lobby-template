@@ -32,6 +32,7 @@ const websocket = ({ port, server }) => {
                 thisPlayer.datingProfile = { userName: '' };
                 thisPlayer.currentDatingProfileId = playerId;
                 thisPlayer.wordCount = getRandomWordCount();
+                thisPlayer.curentTurnComplete = false;
                 return game;
             });
         }
@@ -48,16 +49,18 @@ const websocket = ({ port, server }) => {
 
         await datastore.editGame(gameId, async game => {
             const thisDatingProfile = getDatingProfile(datingProfileId, game);
+            const thisPlayer = getPlayer(playerId, game);
 
             fieldNames.forEach(fieldName => {
                 thisDatingProfile[fieldName] = data[fieldName];
             });
 
             if (setProfilePictureOptions) {
-                const thisPlayer = getPlayer(playerId, game);
                 thisPlayer.profilePictureOptions =
                     await getProfilePictureOptions();
             }
+
+            thisPlayer.curentTurnComplete = true;
 
             return game;
         });
@@ -71,6 +74,7 @@ const websocket = ({ port, server }) => {
                         player.currentDatingProfileId,
                         game
                     );
+                    player.curentTurnComplete = false;
                 });
                 return game;
             });
