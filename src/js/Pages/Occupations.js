@@ -1,5 +1,7 @@
 export default [
     'Accountant',
+    'Televangelist',
+    'Award show awards engraver',
     'Auditor',
     'Actor',
     'Tender'
@@ -257,6 +259,6 @@ export default [
     'Fantasy Nerd', 
     'Dungeon Master',
     'Sandwich Artist',
-    'Snow Cone Technician"
+    'Snow Cone Technician',
     'Game Stonks Ape',
 ];
