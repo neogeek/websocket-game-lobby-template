@@ -152,6 +152,10 @@ const DatingProfileCreator = ({ data, send }) => {
             setIsAgeFormSubmitted(true);
         };
 
+        if (!data?.game.isReady) {
+            return <LookAtScreen/>
+        }
+
         return !isAgeFormSubmitted ? (
             <Box direction="column" style={{ alignItems: 'center' }}>
                 <Paragraph
@@ -208,6 +212,10 @@ const DatingProfileCreator = ({ data, send }) => {
             });
             setIsProfessionFormSubmitted(true);
         };
+
+        if (!data?.game.isReady) {
+            return <LookAtScreen/>
+        }
 
         return !isProfessionFormSubmitted ? (
             <Box direction="column" style={{ alignItems: 'center' }}>
@@ -279,6 +287,10 @@ const DatingProfileCreator = ({ data, send }) => {
             });
             setIsWorkplaceFormSubmitted(true);
         };
+
+        if (!data?.game.isReady) {
+            return <LookAtScreen/>
+        }
 
         return !isWorkplaceFormSubmitted ? (
             <Box direction="column" style={{ alignItems: 'center' }}>
@@ -395,6 +407,10 @@ const DatingProfileCreator = ({ data, send }) => {
             return `${wordCount - numberOfWords} words remaining`;
         };
 
+        if (!data?.game.isReady) {
+            return <LookAtScreen/>
+        }
+
         return (
             <>
                 {!isAnswerSubmitted ? (
@@ -487,6 +503,10 @@ const DatingProfileCreator = ({ data, send }) => {
             });
             window.scrollTo(0, 0)
         };
+
+        if (!data?.game.isReady) {
+            return <LookAtScreen/>
+        }
 
         return player ? (
             <Box direction="column">

@@ -61,7 +61,7 @@ export default [
     'Colgate-Palmolive',
     'Comcast',
     'Comdisco',
-    'Sn-Oasis", 
+    'SnOasis',
     'Comfort Systems USA',
     'Constellation Brands',
     'Constellation Emergy Group',

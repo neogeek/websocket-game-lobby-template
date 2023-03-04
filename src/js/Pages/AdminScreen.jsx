@@ -74,6 +74,7 @@ const AdminScreen = ({ data, send }) => {
     const renderTalkingCharacter = (currentTurn) => {
       return (
         <TalkingCharacter
+            send={send}
             dialogue={switchDialogue(currentTurn)}
         />
       );

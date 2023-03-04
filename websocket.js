@@ -73,8 +73,6 @@ const websocket = ({ port, server }) => {
 
             thisPlayer.curentTurnComplete = true;
 
-            game.isReady = false
-
             return game;
         });
 
@@ -91,6 +89,8 @@ const websocket = ({ port, server }) => {
                 });
                 return game;
             });
+
+            game.isReady = false
 
             await datastore.endCurrentTurn(gameId);
         }
