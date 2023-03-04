@@ -5,7 +5,7 @@ import { Next } from 'grommet-icons';
 
 import Button from '../Components/Button.jsx';
 
-const TalkingCharacter = ({ dialogue }) => {
+const TalkingCharacter = ({ dialogue, send }) => {
     const [index, setIndex] = useState(0);
 
     useEffect(() => {
@@ -50,7 +50,13 @@ const TalkingCharacter = ({ dialogue }) => {
                     onClick={() => setIndex(prev => prev + 1)}
                     icon={<Next />}
                 />
-            ) : null}
+            ) : <Button
+                primary
+                reverse
+                label="Ready!"
+                onClick={send ? () => send('ready') : () => setIndex(prev => prev + 1)}
+                icon={<Next />}
+            />}
         </Box>
     );
 };

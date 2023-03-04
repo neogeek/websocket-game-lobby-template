@@ -6,6 +6,7 @@ import DatingProfilePreview from '../Components/DatingProfilePreview.jsx';
 import Button from '../Components/Button.jsx';
 import TextInput from '../Components/TextInput.jsx';
 import UsernameForm from '../Components/UsernameForm.jsx';
+import LookAtScreen from '../Components/LookAtScreen.jsx'
 
 import occupations from './Occupations.js';
 import companies from './Companies.js';
@@ -43,6 +44,11 @@ const DatingProfileCreator = ({ data, send }) => {
         useState(false);
 
     const renderUsernameForm = () => {
+
+        if (!data?.game.isReady) {
+            return <LookAtScreen/>
+        }
+
         return !isUsernameFormSubmitted ? (
             <UsernameForm data={data} send={send} setIsUsernameFormSubmitted={setIsUsernameFormSubmitted}  />
         ) : (
@@ -64,6 +70,10 @@ const DatingProfileCreator = ({ data, send }) => {
 
             setIsProfilePicSubmitted(true);
         };
+
+        if (!data?.game.isReady) {
+            return <LookAtScreen/>
+        }
 
         return isProfilePicSubmitted ? (
             renderWaitingForOtherPlayers()

@@ -14,6 +14,7 @@ const AdminScreen = ({ data, send }) => {
             case 1:
                 return (
                     <TalkingCharacter
+                        send={send}
                         dialogue={[
                             'Welcome to Magnetic Personality - the game where you and your friends collaboratively create chaotic fictional dating profiles!',
                             'To start, everyone use your device to submit a username for a dating profile.',
@@ -25,6 +26,7 @@ const AdminScreen = ({ data, send }) => {
             case 2:
                 return (
                     <TalkingCharacter
+                        send={send}
                         dialogue={[
                             'Everyone submitted some very creative usernames!',
                             'The next thing these dating profiles need are profile pictures!',
@@ -37,6 +39,7 @@ const AdminScreen = ({ data, send }) => {
             case 3:
                 return (
                     <TalkingCharacter
+                        send={send}
                         dialogue={[
                             'Okay, those profile pictures are cute! Well... some of them are.',
                             'Now guess how old everyone is based on their profile pictures!'

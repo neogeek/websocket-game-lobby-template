@@ -32,6 +32,17 @@ const websocket = ({ port, server }) => {
                 thisPlayer.datingProfile = { userName: '' };
                 thisPlayer.currentDatingProfileId = playerId;
                 thisPlayer.wordCount = getRandomWordCount();
+                game.isReady = false
+                return game;
+            });
+        }
+    );
+
+    gameLobby.addEventListener(
+        'ready',
+        async ({ gameId, playerId, playerName }, datastore) => {
+            await datastore.editGame(gameId, async game => {
+                game.isReady = true
                 return game;
             });
         }
@@ -58,6 +69,8 @@ const websocket = ({ port, server }) => {
                 thisPlayer.profilePictureOptions =
                     await getProfilePictureOptions();
             }
+
+            game.isReady = false
 
             return game;
         });
