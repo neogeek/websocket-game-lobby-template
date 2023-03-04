@@ -1,0 +1,6 @@
+.completed-players {
+  padding: 20px;
+  background-color: rgba(87,135,255, .6);
+  color: white;
+  font-weight: bold;
+}
