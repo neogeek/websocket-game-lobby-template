@@ -99,6 +99,7 @@ const websocket = ({ port, server }) => {
             await datastore.editGame(gameId, async game => {
                 const thisPlayer = getPlayer(playerId, game);
                 thisPlayer.wordCount = getRandomWordCount();
+                thisPlayer.curentTurnComplete = true;
                 const thisDatingProfile = getDatingProfile(
                     datingProfileId,
                     game
@@ -124,6 +125,7 @@ const websocket = ({ port, server }) => {
                             player.currentDatingProfileId,
                             game
                         );
+                        player.curentTurnComplete = false;
                     });
                     return game;
                 });
